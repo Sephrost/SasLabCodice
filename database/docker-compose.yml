@@ -9,12 +9,12 @@ services:
     # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: 4321test
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
     volumes:
-      - dbdata:/var/lib/mysql
+      # - dbdata:/var/lib/mysql
       - ./catering_init_03.sql:/docker-entrypoint-initdb.d/catering_init_03.sql
 
-volumes:
-  dbdata:
+# volumes:
+#   dbdata:
