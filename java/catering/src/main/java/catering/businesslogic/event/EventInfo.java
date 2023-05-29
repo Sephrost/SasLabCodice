@@ -17,6 +17,7 @@ public class EventInfo implements EventItemInfo {
     private Date dateEnd;
     private int participants;
     private User organizer;
+    private User chef;
 
     private ObservableList<ServiceInfo> services;
 
@@ -24,13 +25,15 @@ public class EventInfo implements EventItemInfo {
         this.name = name;
         id = 0;
     }
-
     public ObservableList<ServiceInfo> getServices() {
         return FXCollections.unmodifiableObservableList(this.services);
     }
 
     public String toString() {
         return name + ": " + dateStart + "-" + dateEnd + ", " + participants + " pp. (" + organizer.getUserName() + ")";
+    }
+    public User getAssignedChef(){
+        return this.chef;
     }
 
     // STATIC METHODS FOR PERSISTENCE
