@@ -4,24 +4,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
-
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
 public class ServiceInfo implements EventItemInfo {
+	public static enum State {NOT_STARTED, IN_PROGRESS, COMPLETED, CANCELLED};
 	private int id;
 	private String name;
-	private Type type;
 	private String notes;
 	private String location;
 	private State state;
 	private Date date;
-	private LocalTime startHour;
-	private LocalTime endHour;
-	private SummarySheet sheet; // TODO: controllare
+	private Time startHour;
+	private Time endHour;
+	private int proposedMenu;
+	private int approvedMenu;
+	private int expected_participants;
 	private int EventId;
+
 
 	public ServiceInfo(String name) {
 		this.name = name;
@@ -34,10 +36,6 @@ public class ServiceInfo implements EventItemInfo {
 
 	public String getName() {
 		return name;
-	}
-
-	public Type getType() {
-		return type;
 	}
 
 	public String getNotes() {
@@ -56,41 +54,38 @@ public class ServiceInfo implements EventItemInfo {
 		return date;
 	}
 
-	public LocalTime getStartHour() {
+	public Time getStartHour() {
 		return startHour;
 	}
 
-	public LocalTime getEndHour() {
+	public Time getEndHour() {
 		return endHour;
 	}
-
-	public SummarySheet getSheet() {
-		return sheet;
+	//getter for menu
+	public int getMenu() {
+		if(approvedMenu != 0)
+			return approvedMenu;
+		else
+			return proposedMenu;
 	}
 
-	// tostring
-	@Override
+	public int getExpectedParticipants() {
+		return expected_participants;
+	}
+	public EventInfo getEventId() {
+		return EventInfo.loadEventInfoById(EventId); //TODO: controllare
+	}
+
+	// tostring method override
 	public String toString() {
-		return "ServiceInfo{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", type=" + type +
-				", notes='" + notes + '\'' +
-				", location='" + location + '\'' +
-				", state=" + state +
-				", date=" + date +
-				", startHour=" + startHour +
-				", endHour=" + endHour +
-				", sheet=" + sheet +
-				'}';
+		return name + ": " + date + ", " + startHour + "-" + endHour + ", " + expected_participants + " pp.";
 	}
 
 	// STATIC METHODS FOR PERSISTENCE
-
+	// TODO: cambiare query e mettere i campi giusti
 	public static ObservableList<ServiceInfo> loadServiceInfoForEvent(int event_id) {
 		ObservableList<ServiceInfo> result = FXCollections.observableArrayList();
-		String query = "SELECT id, name, service_date, time_start, time_end, expected_participants " +
-				"FROM Services WHERE event_id = " + event_id;
+		String query = "SELECT *FROM Services WHERE event_id = " + event_id;
 		PersistenceManager.executeQuery(query, new ResultHandler() {
 			@Override
 			public void handle(ResultSet rs) throws SQLException {
@@ -98,13 +93,47 @@ public class ServiceInfo implements EventItemInfo {
 				ServiceInfo serv = new ServiceInfo(s);
 				serv.id = rs.getInt("id");
 				serv.date = rs.getDate("service_date");
-				serv.timeStart = rs.getTime("time_start");
-				serv.timeEnd = rs.getTime("time_end");
-				serv.participants = rs.getInt("expected_participants");
+				serv.name = rs.getString("name");
+				serv.notes = rs.getString("notes");
+				serv.location = rs.getString("location");
+				serv.state = State.valueOf(rs.getString("state"));
+				serv.proposedMenu = rs.getInt("proposed_menu_id");
+				serv.approvedMenu = rs.getInt("approved_menu_id");
+				serv.date = rs.getDate("service_date");
+				serv.startHour = rs.getTime("time_start");
+				serv.endHour = rs.getTime("time_end");
+				serv.expected_participants = rs.getInt("expected_participants");
 				result.add(serv);
 			}
 		});
-
 		return result;
 	}
+	public static ServiceInfo loadServiceInfo(int service_id) {
+        ObservableList<ServiceInfo> result = FXCollections.observableArrayList();
+        String query =
+                "SELECT event_id, name, service_date, time_start, time_end, expected_participants, approved_menu_id "
+                        + "FROM Services WHERE id = "
+                        + service_id
+                        + ";";
+        PersistenceManager.executeQuery(
+                query,
+                rs -> {
+                    String s = rs.getString("name");
+                    ServiceInfo serv = new ServiceInfo(s);
+                    serv.id = rs.getInt("id");
+				serv.date = rs.getDate("service_date");
+				serv.name = rs.getString("name");
+				serv.notes = rs.getString("notes");
+				serv.location = rs.getString("location");
+				serv.state = State.valueOf(rs.getString("state"));
+				serv.proposedMenu = rs.getInt("proposed_menu_id");
+				serv.approvedMenu = rs.getInt("approved_menu_id");
+				serv.date = rs.getDate("service_date");
+				serv.startHour = rs.getTime("time_start");
+				serv.endHour = rs.getTime("time_end");
+				serv.expected_participants = rs.getInt("expected_participants");
+                result.add(serv);
+                });
+        return result.get(0);
+    }
 }
