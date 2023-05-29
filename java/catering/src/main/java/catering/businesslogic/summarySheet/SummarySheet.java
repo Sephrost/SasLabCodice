@@ -1,22 +1,26 @@
 package catering.businesslogic.summarySheet;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.kitchenJob.KitchenJob;
-import catering.businesslogic.service.Service;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
+
 
 public class SummarySheet {
-	private ServiceInfo service;
+	private final ServiceInfo service;
 	private List<Task> task;
 	// TODO: controllare menù da aggiungere
 
-	public SummarySheet(Service service) {
+	public SummarySheet(ServiceInfo service) {
 		this.service = service;
 		this.task = new ArrayList<Task>();
+	}
+
+	public ServiceInfo getService() {
+		return service;
 	}
 
 	public void addAssignment(KitchenJob kj) {

@@ -4,6 +4,7 @@ import catering.businesslogic.event.EventManager;
 import catering.businesslogic.menu.MenuManager;
 import catering.businesslogic.recipe.RecipeManager;
 import catering.businesslogic.summarySheet.SummarySheet;
+import catering.businesslogic.summarySheet.SummarySheetManager;
 import catering.businesslogic.user.UserManager;
 import catering.persistence.MenuPersistence;
 
