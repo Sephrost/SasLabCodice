@@ -1,12 +1,15 @@
 package catering.businesslogic.kitchenJob;
-
-import java.time.Duration;
-import java.util.ArrayList;
-
-import catering.businesslogic.shiftManagement.ShiftBoard;
-import catering.businesslogic.user.User;
-import catering.businesslogic.shiftManagement.Shift;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class KitchenJobManager {
-    
+
+    public KitchenJobManager() {
+        KitchenJob.loadAllKitchenJobs();
+    }
+
+    public ObservableList<KitchenJob> getRecipes() {
+        return FXCollections.unmodifiableObservableList(KitchenJob.getAllKitchenJobs());
+    }
 }
+

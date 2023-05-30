@@ -102,7 +102,7 @@ CREATE TABLE `menuitems` (
   `menu_id` int(11) NOT NULL,
   `section_id` int(11) DEFAULT NULL,
   `description` tinytext DEFAULT NULL,
-  `recipe_id` int(11) NOT NULL,
+  `kitchenjobs_id` int(11) NOT NULL,
   `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -110,7 +110,7 @@ CREATE TABLE `menuitems` (
 -- Dump dei dati per la tabella `menuitems`
 --
 
-INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `recipe_id`, `position`) VALUES
+INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `kitchenjobs_id`, `position`) VALUES
 (96, 80, 0, 'Croissant vuoti', 9, 0),
 (97, 80, 0, 'Croissant alla marmellata', 9, 1),
 (98, 80, 0, 'Pane al cioccolato mignon', 10, 2),
@@ -205,19 +205,19 @@ INSERT INTO `menusections` (`id`, `menu_id`, `name`, `position`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `recipes`
+-- Struttura della tabella `kitchenjobss`
 --
 
-CREATE TABLE `recipes` (
+CREATE TABLE `kitchenjobs` (
   `id` int(11) NOT NULL,
   `name` tinytext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `recipes`
+-- Dump dei dati per la tabella `kitchenjobss`
 --
 
-INSERT INTO `recipes` (`id`, `name`) VALUES
+INSERT INTO `kitchenjobs` (`id`, `name`) VALUES
 (1, 'Vitello tonnato'),
 (2, 'Carpaccio di spada'),
 (3, 'Alici marinate'),
@@ -381,9 +381,9 @@ ALTER TABLE `menusections`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `recipes`
+-- Indici per le tabelle `kitchenjobss`
 --
-ALTER TABLE `recipes`
+ALTER TABLE `kitchenjobss`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -433,9 +433,9 @@ ALTER TABLE `menusections`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
--- AUTO_INCREMENT per la tabella `recipes`
+-- AUTO_INCREMENT per la tabella `kitchenjobss`
 --
-ALTER TABLE `recipes`
+ALTER TABLE `kitchenjobss`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
