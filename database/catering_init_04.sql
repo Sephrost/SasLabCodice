@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Creato il: Mag 29, 2023 alle 20:42
--- Versione del server: 10.4.27-MariaDB
--- Versione PHP: 8.1.12
+-- Host: localhost
+-- Generation Time: May 30, 2023 at 01:19 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,13 +20,11 @@ SET time_zone = "+00:00";
 --
 -- Database: `catering`
 --
--- DO NOT FORGET THE FOLLOWING LINES IN NEXT VERSIONS
-CREATE DATABASE catering;
-USE catering;
+
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `events`
+-- Table structure for table `events`
 --
 
 CREATE TABLE `events` (
@@ -40,7 +38,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `events`
+-- Dumping data for table `events`
 --
 
 INSERT INTO `events` (`id`, `name`, `date_start`, `date_end`, `expected_participants`, `organizer_id`, `chef_id`) VALUES
@@ -51,7 +49,44 @@ INSERT INTO `events` (`id`, `name`, `date_start`, `date_end`, `expected_particip
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `menufeatures`
+-- Table structure for table `kitchenjobs`
+--
+
+CREATE TABLE `kitchenjobs` (
+  `id` int(11) NOT NULL,
+  `name` tinytext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `kitchenjobs`
+--
+
+INSERT INTO `kitchenjobs` (`id`, `name`) VALUES
+(1, 'Vitello tonnato'),
+(2, 'Carpaccio di spada'),
+(3, 'Alici marinate'),
+(4, 'Insalata di riso'),
+(5, 'Penne al sugo di baccalà'),
+(6, 'Pappa al pomodoro'),
+(7, 'Hamburger con bacon e cipolla caramellata'),
+(8, 'Salmone al forno'),
+(9, 'Croissant'),
+(10, 'Pane al cioccolato'),
+(11, 'Girelle all\'uvetta'),
+(12, 'Panini al latte'),
+(13, 'Biscotti di pasta frolla'),
+(14, 'Lingue di gatto'),
+(15, 'Bigné farciti'),
+(16, 'Pizzette'),
+(17, 'Tramezzini'),
+(18, 'Sorbetto al limone'),
+(19, 'Torta Saint Honoré'),
+(20, 'Risotto alla zucca');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menufeatures`
 --
 
 CREATE TABLE `menufeatures` (
@@ -61,7 +96,7 @@ CREATE TABLE `menufeatures` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `menufeatures`
+-- Dumping data for table `menufeatures`
 --
 
 INSERT INTO `menufeatures` (`menu_id`, `name`, `value`) VALUES
@@ -94,7 +129,7 @@ INSERT INTO `menufeatures` (`menu_id`, `name`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `menuitems`
+-- Table structure for table `menuitems`
 --
 
 CREATE TABLE `menuitems` (
@@ -107,7 +142,7 @@ CREATE TABLE `menuitems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `menuitems`
+-- Dumping data for table `menuitems`
 --
 
 INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `kitchenjobs_id`, `position`) VALUES
@@ -151,7 +186,7 @@ INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `kitchenj
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `menus`
+-- Table structure for table `menus`
 --
 
 CREATE TABLE `menus` (
@@ -162,7 +197,7 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `menus`
+-- Dumping data for table `menus`
 --
 
 INSERT INTO `menus` (`id`, `title`, `owner_id`, `published`) VALUES
@@ -175,7 +210,7 @@ INSERT INTO `menus` (`id`, `title`, `owner_id`, `published`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `menusections`
+-- Table structure for table `menusections`
 --
 
 CREATE TABLE `menusections` (
@@ -186,7 +221,7 @@ CREATE TABLE `menusections` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `menusections`
+-- Dumping data for table `menusections`
 --
 
 INSERT INTO `menusections` (`id`, `menu_id`, `name`, `position`) VALUES
@@ -205,44 +240,7 @@ INSERT INTO `menusections` (`id`, `menu_id`, `name`, `position`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `kitchenjobss`
---
-
-CREATE TABLE `kitchenjobs` (
-  `id` int(11) NOT NULL,
-  `name` tinytext DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dump dei dati per la tabella `kitchenjobss`
---
-
-INSERT INTO `kitchenjobs` (`id`, `name`) VALUES
-(1, 'Vitello tonnato'),
-(2, 'Carpaccio di spada'),
-(3, 'Alici marinate'),
-(4, 'Insalata di riso'),
-(5, 'Penne al sugo di baccalà'),
-(6, 'Pappa al pomodoro'),
-(7, 'Hamburger con bacon e cipolla caramellata'),
-(8, 'Salmone al forno'),
-(9, 'Croissant'),
-(10, 'Pane al cioccolato'),
-(11, 'Girelle all\'uvetta'),
-(12, 'Panini al latte'),
-(13, 'Biscotti di pasta frolla'),
-(14, 'Lingue di gatto'),
-(15, 'Bigné farciti'),
-(16, 'Pizzette'),
-(17, 'Tramezzini'),
-(18, 'Sorbetto al limone'),
-(19, 'Torta Saint Honoré'),
-(20, 'Risotto alla zucca');
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -251,7 +249,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `role`) VALUES
@@ -263,7 +261,7 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `services`
+-- Table structure for table `services`
 --
 
 CREATE TABLE `services` (
@@ -282,7 +280,7 @@ CREATE TABLE `services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `services`
+-- Dumping data for table `services`
 --
 
 INSERT INTO `services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, `proposed_menu_id`, `approved_menu_id`, `service_date`, `time_start`, `time_end`, `expected_participants`) VALUES
@@ -298,7 +296,48 @@ INSERT INTO `services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, 
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `userroles`
+-- Table structure for table `shift`
+--
+
+CREATE TABLE `shift` (
+  `id` int(11) NOT NULL,
+  `data` date NOT NULL,
+  `starttime` time NOT NULL,
+  `endtime` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `summarysheet`
+--
+
+CREATE TABLE `summarysheet` (
+  `service_id` int(11) NOT NULL,
+  `task_id` int(11) NOT NULL,
+  `chef_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Task`
+--
+
+CREATE TABLE `Task` (
+  `id` int(11) NOT NULL,
+  `completed` tinyint(1) NOT NULL,
+  `quantity` varchar(30) NOT NULL,
+  `kitchenjob_id` int(11) NOT NULL,
+  `cook_id` int(11) NOT NULL,
+  `estimatedtime` double NOT NULL,
+  `shift_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userroles`
 --
 
 CREATE TABLE `userroles` (
@@ -307,7 +346,7 @@ CREATE TABLE `userroles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `userroles`
+-- Dumping data for table `userroles`
 --
 
 INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
@@ -328,7 +367,7 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -337,7 +376,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dump dei dati per la tabella `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`) VALUES
@@ -353,102 +392,66 @@ INSERT INTO `users` (`id`, `username`) VALUES
 (10, 'Piergiorgio');
 
 --
--- Indici per le tabelle scaricate
+-- Indexes for dumped tables
 --
 
 --
--- Indici per le tabelle `events`
+-- Indexes for table `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `menuitems`
+-- Indexes for table `menuitems`
 --
 ALTER TABLE `menuitems`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `menus`
+-- Indexes for table `menus`
 --
 ALTER TABLE `menus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `menusections`
+-- Indexes for table `menusections`
 --
 ALTER TABLE `menusections`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `kitchenjobss`
+-- Indexes for table `shift`
 --
-ALTER TABLE `kitchenjobss`
+ALTER TABLE `shift`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `roles`
+-- Indexes for table `summarysheet`
 --
-ALTER TABLE `roles`
+ALTER TABLE `summarysheet`
+  ADD PRIMARY KEY (`service_id`,`task_id`);
+
+--
+-- Indexes for table `Task`
+--
+ALTER TABLE `Task`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indici per le tabelle `services`
---
-ALTER TABLE `services`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indici per le tabelle `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT per le tabelle scaricate
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT per la tabella `events`
+-- AUTO_INCREMENT for table `shift`
 --
-ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `shift`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT per la tabella `menuitems`
+-- AUTO_INCREMENT for table `Task`
 --
-ALTER TABLE `menuitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
-
---
--- AUTO_INCREMENT per la tabella `menus`
---
-ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
-
---
--- AUTO_INCREMENT per la tabella `menusections`
---
-ALTER TABLE `menusections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
-
---
--- AUTO_INCREMENT per la tabella `kitchenjobss`
---
-ALTER TABLE `kitchenjobss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT per la tabella `services`
---
-ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT per la tabella `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `Task`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

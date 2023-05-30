@@ -1,19 +1,19 @@
 package catering.businesslogic.summarySheet;
 
 import catering.businesslogic.kitchenJob.KitchenJob;
-import catering.businesslogic.shiftManagement.ShiftBoard;
+import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 
 public class Task {
+    private int id;
     private boolean completed;
     private String quantity;
     private String estimatedTime;
+    private User cook;
+    private KitchenJob kj;
+    private Shift shift;
 
-    public KitchenJob getKitchenJob() {
-        // implementation
-    }
-
-    public void setShift(ShiftBoard shift) {
+    public void setShift(Shift shift) {
         // implementation
     }
 
@@ -30,6 +30,7 @@ public class Task {
     }
 
     public void setCompleted() {
-        // implementation
+        completed=true;
     }
+
 }
