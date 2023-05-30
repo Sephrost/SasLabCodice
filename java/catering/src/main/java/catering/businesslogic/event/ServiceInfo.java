@@ -120,8 +120,7 @@ public class ServiceInfo implements EventItemInfo {
 	public static ServiceInfo loadServiceInfo(int service_id) {
         ObservableList<ServiceInfo> result = FXCollections.observableArrayList();
         String query =
-                "SELECT event_id, name, service_date, time_start, time_end, expected_participants, approved_menu_id "
-                        + "FROM Services WHERE id = "
+                "SELECT * FROM Services WHERE id = "
                         + service_id
                         + ";";
         PersistenceManager.executeQuery(
@@ -145,4 +144,22 @@ public class ServiceInfo implements EventItemInfo {
                 });
         return result.get(0);
     }
+
+
+	// https://stackoverflow.com/questions/2265503/why-do-i-need-to-override-the-equals-and-hashcode-methods-in-java
+	@Override
+	public int hashCode(){
+		final int prime = 31;
+		int result = 1;
+		return prime * result + id ;
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (!(obj instanceof ServiceInfo)) return false;
+		ServiceInfo other = (ServiceInfo) obj;
+		return id == other.id;
+	}
 }

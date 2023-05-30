@@ -1,10 +1,12 @@
 package catering.businesslogic.summarySheet;
 
+import java.security.Provider.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import catering.businesslogic.event.ServiceInfo;
@@ -15,12 +17,14 @@ import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 
 
 public class SummarySheet {
 	private final ServiceInfo service;
 	private List<Task> task;
+	private User chef;
 	// TODO: controllare menù da aggiungere
 
 	public SummarySheet(ServiceInfo service) {
@@ -54,6 +58,7 @@ public class SummarySheet {
 
 	public boolean hasTask() {
 		// implementation
+		return true;
 	}
 
 	public void swapTaskPositions(Task task, int position) {
@@ -78,30 +83,39 @@ public class SummarySheet {
 
 	// Static method for persistence
 	public static ObservableList<SummarySheet> getAllSummarySheets() {
-		String query = "SELECT * FROM SummarySheets join Services on SummarySheets.service_id = Services.id group by SummarySheets.id";
-		List<SummarySheet> summarySheets = new ArrayList<SummarySheet>();
+		String query = "SELECT * FROM SummarySheets";
+		ObservableList<SummarySheet> summarySheets = FXCollections.observableArrayList();
+		HashMap<ServiceInfo, List<Task>> taskList = new HashMap<ServiceInfo, List<Task>>();
+		HashMap<ServiceInfo, User> chefList = new HashMap<ServiceInfo, User>();
 		
-		PersistenceManager.executeQuery(query, new ResultHandler() {
-			@Override
-			public void handle(ResultSet rs) throws SQLException {
-				int id = rs.getInt("id");
-				String name = rs.getString("name");
-				String notes = rs.getString("notes");
-				String location = rs.getString("location");
-				State state = State.valueOf(rs.getString("state"));
-				Date date = rs.getDate("service_date");
-				LocalTime startHour = rs.getTime("time_start").toLocalTime();
-				LocalTime endHour = rs.getTime("time_end").toLocalTime();
-				int expected_participants = rs.getInt("expected_participants");
-				int EventId = rs.getInt("event_id");
-				ServiceInfo service = new ServiceInfo(name, notes, location, state, date, startHour, endHour, proposedMenu, approvedMenu, expected_participants, EventId);
-				SummarySheet summarySheet = new SummarySheet(service);
-				summarySheets.add(summarySheet);
-			}
-		});
-			
+			PersistenceManager.executeQuery(query, new ResultHandler() {
+				@Override
+				public void handle(ResultSet rs) throws SQLException {
+					while(rs.next()) {
+						ServiceInfo service = ServiceInfo.loadServiceInfo(rs.getInt("service_id"));
+						Task task = Task.loadTask(rs.getInt("task_id"));
+						User chef = User.loadUserById(rs.getInt("chef_id"));
 
+						// Append task to taskList
+						if(taskList.containsKey(service)) {
+							taskList.get(service).add(task);
+						} else {
+							List<Task> tasks = new ArrayList<Task>();
+							tasks.add(task);
+							taskList.put(service, tasks);
+						}
+						chefList.put(service, chef);
+					}
+				}
+			});
 		
-		return FXCollections.observableList(summarySheets);
+		for(ServiceInfo service : taskList.keySet()) {
+			SummarySheet summarySheet = new SummarySheet(service);
+			summarySheet.task = taskList.get(service);
+			summarySheet.chef = chefList.get(service);
+			summarySheets.add(summarySheet);
+		}
+		
+		return summarySheets;
 	}
 }

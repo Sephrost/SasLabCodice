@@ -14,7 +14,6 @@ import catering.businesslogic.event.*;
 import catering.businesslogic.event.ServiceInfo.State;
 import catering.businesslogic.kitchenJob.KitchenJob;
 import catering.businesslogic.menu.Menu;
-import catering.businesslogic.service.Service;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
@@ -35,13 +34,16 @@ public class SummarySheetManager {
         }
        
         for(SummarySheet s : SummarySheet.getAllSummarySheets()){
-            if(s.getService().equals(service)){
+            if(s.getService() == service){
                 setCurrentSummarySheet(s);
+				System.out.println("SummarySheet already exists");
                 return s;
             }
         }
 
         SummarySheet s = new SummarySheet(service);
+		//[for each kitchenJob in service.getMenu()]
+
         this.setCurrentSummarySheet(s);
         this.notifySummarySheetCreated(s);
 

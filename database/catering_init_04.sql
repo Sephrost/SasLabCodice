@@ -337,10 +337,10 @@ INSERT INTO `SummarySheets` (`service_id`, `task_id`, `chef_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Task`
+-- Table structure for table `Tasks`
 --
 
-CREATE TABLE `Task` (
+CREATE TABLE `Tasks` (
   `id` int(11) NOT NULL,
   `completed` tinyint(1) NOT NULL,
   `quantity` varchar(30) NOT NULL,
@@ -351,10 +351,10 @@ CREATE TABLE `Task` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Task`
+-- Dumping data for table `Tasks`
 --
 
-INSERT INTO `Task` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimatedtime`, `shift_id`) VALUES
+INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimatedtime`, `shift_id`) VALUES
 (1, 0, 'Tanta tanta', 1, 5, 30.6, 1),
 (2, 0, 'abbastanza per un elefante', 2, 6, 35, 2);
 
@@ -456,9 +456,9 @@ ALTER TABLE `SummarySheets`
   ADD PRIMARY KEY (`service_id`,`task_id`);
 
 --
--- Indexes for table `Task`
+-- Indexes for table `Tasks`
 --
-ALTER TABLE `Task`
+ALTER TABLE `Tasks`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -474,7 +474,7 @@ ALTER TABLE `Shifts`
 --
 -- AUTO_INCREMENT for table `Task`
 --
-ALTER TABLE `Task`
+ALTER TABLE `Tasks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
