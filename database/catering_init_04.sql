@@ -20,7 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `catering`
 --
-
+-- DO NOT FORGET THE FOLLOWING LINES IN NEXT VERSIONS
+CREATE DATABASE catering;
+USE catering;
 -- --------------------------------------------------------
 
 --
