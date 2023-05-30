@@ -1,7 +1,7 @@
 package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
-import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.kitchenJob.*;
 import catering.businesslogic.user.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -133,7 +133,7 @@ public class Menu {
         this.sections.add(new Section("Secondi"));
         this.sections.add(new Section("Dessert"));
 
-        Recipe[] all = CatERing.getInstance().getRecipeManager().getRecipes().toArray(new Recipe[0]);
+        KitchenJob[] all = CatERing.getInstance().getKitchenJobManager().getKitchenJobs().toArray(new KitchenJob[0]);//toArray(new KitchenJob[0]);
         freeItems.add(new MenuItem(all[3]));
         freeItems.add(new MenuItem(all[4]));
         freeItems.add(new MenuItem(all[5]));
@@ -146,8 +146,8 @@ public class Menu {
         return sec;
     }
 
-    public MenuItem addItem(Recipe recipe, Section sec, String desc) {
-        MenuItem mi = new MenuItem(recipe, desc);
+    public MenuItem addItem(KitchenJob kj, Section sec, String desc) {
+        MenuItem mi = new MenuItem(kj, desc);
         if (sec != null) {
             sec.addItem(mi);
         } else {
