@@ -52,4 +52,8 @@ public class CatERing {
 		return eventMgr;
 	}
 
+	public SummarySheetManager getSummarySheetManager() {
+		return summarySheetMgr;
+	}
+
 }
