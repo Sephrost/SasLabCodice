@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Table structure for table `Events`
 --
 
-CREATE TABLE `events` (
+CREATE TABLE `Events` (
   `id` int(11) NOT NULL,
   `name` varchar(128) DEFAULT NULL,
   `date_start` date DEFAULT NULL,
@@ -38,10 +38,10 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `events`
+-- Dumping data for table `Events`
 --
 
-INSERT INTO `events` (`id`, `name`, `date_start`, `date_end`, `expected_participants`, `organizer_id`, `chef_id`) VALUES
+INSERT INTO `Events` (`id`, `name`, `date_start`, `date_end`, `expected_participants`, `organizer_id`, `chef_id`) VALUES
 (1, 'Convegno Agile Community', '2020-09-25', '2020-09-25', 100, 2, 0),
 (2, 'Compleanno di Manuela', '2020-08-13', '2020-08-13', 25, 2, 0),
 (3, 'Fiera del Sedano Rapa', '2020-10-02', '2020-10-04', 400, 1, 0);
@@ -49,19 +49,19 @@ INSERT INTO `events` (`id`, `name`, `date_start`, `date_end`, `expected_particip
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kitchenjobs`
+-- Table structure for table `KitchenJobs`
 --
 
-CREATE TABLE `kitchenjobs` (
+CREATE TABLE `KitchenJobs` (
   `id` int(11) NOT NULL,
   `name` tinytext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `kitchenjobs`
+-- Dumping data for table `KitchenJobs`
 --
 
-INSERT INTO `kitchenjobs` (`id`, `name`) VALUES
+INSERT INTO `KitchenJobs` (`id`, `name`) VALUES
 (1, 'Vitello tonnato'),
 (2, 'Carpaccio di spada'),
 (3, 'Alici marinate'),
@@ -86,20 +86,20 @@ INSERT INTO `kitchenjobs` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menufeatures`
+-- Table structure for table `MenuFeatures`
 --
 
-CREATE TABLE `menufeatures` (
+CREATE TABLE `MenuFeatures` (
   `menu_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `value` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `menufeatures`
+-- Dumping data for table `MenuFeatures`
 --
 
-INSERT INTO `menufeatures` (`menu_id`, `name`, `value`) VALUES
+INSERT INTO `MenuFeatures` (`menu_id`, `name`, `value`) VALUES
 (80, 'Richiede cuoco', 0),
 (80, 'Buffet', 0),
 (80, 'Richiede cucina', 0),
@@ -129,10 +129,10 @@ INSERT INTO `menufeatures` (`menu_id`, `name`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menuitems`
+-- Table structure for table `MenuItems`
 --
 
-CREATE TABLE `menuitems` (
+CREATE TABLE `MenuItems` (
   `id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   `section_id` int(11) DEFAULT NULL,
@@ -142,10 +142,10 @@ CREATE TABLE `menuitems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `menuitems`
+-- Dumping data for table `MenuItems`
 --
 
-INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `kitchenjobs_id`, `position`) VALUES
+INSERT INTO `MenuItems` (`id`, `menu_id`, `section_id`, `description`, `kitchenjobs_id`, `position`) VALUES
 (96, 80, 0, 'Croissant vuoti', 9, 0),
 (97, 80, 0, 'Croissant alla marmellata', 9, 1),
 (98, 80, 0, 'Pane al cioccolato mignon', 10, 2),
@@ -186,10 +186,10 @@ INSERT INTO `menuitems` (`id`, `menu_id`, `section_id`, `description`, `kitchenj
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menus`
+-- Table structure for table `Menus`
 --
 
-CREATE TABLE `menus` (
+CREATE TABLE `Menus` (
   `id` int(11) NOT NULL,
   `title` tinytext DEFAULT NULL,
   `owner_id` int(11) DEFAULT NULL,
@@ -197,10 +197,10 @@ CREATE TABLE `menus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `menus`
+-- Dumping data for table `Menus`
 --
 
-INSERT INTO `menus` (`id`, `title`, `owner_id`, `published`) VALUES
+INSERT INTO `Menus` (`id`, `title`, `owner_id`, `published`) VALUES
 (80, 'Coffee break mattutino', 2, 1),
 (82, 'Coffee break pomeridiano', 2, 1),
 (86, 'Cena di compleanno pesce', 3, 1),
@@ -210,10 +210,10 @@ INSERT INTO `menus` (`id`, `title`, `owner_id`, `published`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menusections`
+-- Table structure for table `MenuSections`
 --
 
-CREATE TABLE `menusections` (
+CREATE TABLE `MenuSections` (
   `id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   `name` tinytext DEFAULT NULL,
@@ -221,10 +221,10 @@ CREATE TABLE `menusections` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `menusections`
+-- Dumping data for table `MenuSections`
 --
 
-INSERT INTO `menusections` (`id`, `menu_id`, `name`, `position`) VALUES
+INSERT INTO `MenuSections` (`id`, `menu_id`, `name`, `position`) VALUES
 (41, 86, 'Antipasti', 0),
 (42, 86, 'Primi', 1),
 (43, 86, 'Secondi', 2),
@@ -240,19 +240,19 @@ INSERT INTO `menusections` (`id`, `menu_id`, `name`, `position`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Table structure for table `Roles`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE `Roles` (
   `id` char(1) NOT NULL,
   `role` varchar(128) NOT NULL DEFAULT 'servizio'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `Roles`
 --
 
-INSERT INTO `roles` (`id`, `role`) VALUES
+INSERT INTO `Roles` (`id`, `role`) VALUES
 ('c', 'cuoco'),
 ('h', 'chef'),
 ('o', 'organizzatore'),
@@ -261,10 +261,10 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `services`
+-- Table structure for table `Services`
 --
 
-CREATE TABLE `services` (
+CREATE TABLE `Services` (
   `id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `name` varchar(128) DEFAULT NULL,
@@ -280,10 +280,10 @@ CREATE TABLE `services` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `services`
+-- Dumping data for table `Services`
 --
 
-INSERT INTO `services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, `proposed_menu_id`, `approved_menu_id`, `service_date`, `time_start`, `time_end`, `expected_participants`) VALUES
+INSERT INTO `Services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, `proposed_menu_id`, `approved_menu_id`, `service_date`, `time_start`, `time_end`, `expected_participants`) VALUES
 (1, 2, 'Cena', NULL, NULL, 'NOT_STARTED', 86, 0, '2020-08-13', '20:00:00', '23:30:00', 25),
 (2, 1, 'Coffee break mattino', NULL, NULL, 'NOT_STARTED', 0, 80, '2020-09-25', '10:30:00', '11:30:00', 100),
 (3, 1, 'Colazione di lavoro', NULL, NULL, 'NOT_STARTED', 0, 0, '2020-09-25', '13:00:00', '14:00:00', 80),
@@ -296,10 +296,10 @@ INSERT INTO `services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shift`
+-- Table structure for table `Shifts`
 --
 
-CREATE TABLE `shift` (
+CREATE TABLE `Shifts` (
   `id` int(11) NOT NULL,
   `data` date NOT NULL,
   `starttime` time NOT NULL,
@@ -307,30 +307,30 @@ CREATE TABLE `shift` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shift`
+-- Dumping data for table `Shifts`
 --
 
-INSERT INTO `shift` (`id`, `data`, `starttime`, `endtime`) VALUES
+INSERT INTO `Shifts` (`id`, `data`, `starttime`, `endtime`) VALUES
 (1, '2020-04-13', '10:00:00', '11:00:00'),
 (2, '2020-04-13', '11:00:00', '12:00:00');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `summarysheet`
+-- Table structure for table `SummarySheets`
 --
 
-CREATE TABLE `summarysheet` (
+CREATE TABLE `SummarySheets` (
   `service_id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
   `chef_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `summarysheet`
+-- Dumping data for table `SummarySheets`
 --
 
-INSERT INTO `summarysheet` (`service_id`, `task_id`, `chef_id`) VALUES
+INSERT INTO `SummarySheets` (`service_id`, `task_id`, `chef_id`) VALUES
 (1, 1, 3),
 (1, 2, 3);
 
@@ -361,19 +361,19 @@ INSERT INTO `Task` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userroles`
+-- Table structure for table `UserRoles`
 --
 
-CREATE TABLE `userroles` (
+CREATE TABLE `UserRoles` (
   `user_id` int(11) NOT NULL,
   `role_id` char(1) NOT NULL DEFAULT 's'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `userroles`
+-- Dumping data for table `UserRoles`
 --
 
-INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
+INSERT INTO `UserRoles` (`user_id`, `role_id`) VALUES
 (1, 'o'),
 (2, 'o'),
 (2, 'h'),
@@ -391,19 +391,19 @@ INSERT INTO `userroles` (`user_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `Users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `Users` (
   `id` int(11) NOT NULL,
   `username` varchar(128) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `Users`
 --
 
-INSERT INTO `users` (`id`, `username`) VALUES
+INSERT INTO `Users` (`id`, `username`) VALUES
 (1, 'Carlin'),
 (2, 'Lidia'),
 (3, 'Tony'),
@@ -420,39 +420,39 @@ INSERT INTO `users` (`id`, `username`) VALUES
 --
 
 --
--- Indexes for table `events`
+-- Indexes for table `Events`
 --
-ALTER TABLE `events`
+ALTER TABLE `Events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menuitems`
+-- Indexes for table `MenuItems`
 --
-ALTER TABLE `menuitems`
+ALTER TABLE `MenuItems`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menus`
+-- Indexes for table `Menus`
 --
-ALTER TABLE `menus`
+ALTER TABLE `Menus`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menusections`
+-- Indexes for table `MenuSections`
 --
-ALTER TABLE `menusections`
+ALTER TABLE `MenuSections`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shift`
+-- Indexes for table `Shifts`
 --
-ALTER TABLE `shift`
+ALTER TABLE `Shifts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `summarysheet`
+-- Indexes for table `SummarySheets`
 --
-ALTER TABLE `summarysheet`
+ALTER TABLE `SummarySheets`
   ADD PRIMARY KEY (`service_id`,`task_id`);
 
 --
@@ -466,9 +466,9 @@ ALTER TABLE `Task`
 --
 
 --
--- AUTO_INCREMENT for table `shift`
+-- AUTO_INCREMENT for table `Shifts`
 --
-ALTER TABLE `shift`
+ALTER TABLE `Shifts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
