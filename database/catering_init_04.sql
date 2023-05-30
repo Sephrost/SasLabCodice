@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 30, 2023 at 01:19 PM
+-- Generation Time: May 30, 2023 at 02:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -306,6 +306,14 @@ CREATE TABLE `shift` (
   `endtime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `shift`
+--
+
+INSERT INTO `shift` (`id`, `data`, `starttime`, `endtime`) VALUES
+(1, '2020-04-13', '10:00:00', '11:00:00'),
+(2, '2020-04-13', '11:00:00', '12:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -317,6 +325,14 @@ CREATE TABLE `summarysheet` (
   `task_id` int(11) NOT NULL,
   `chef_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `summarysheet`
+--
+
+INSERT INTO `summarysheet` (`service_id`, `task_id`, `chef_id`) VALUES
+(1, 1, 3),
+(1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -333,6 +349,14 @@ CREATE TABLE `Task` (
   `estimatedtime` double NOT NULL,
   `shift_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Task`
+--
+
+INSERT INTO `Task` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimatedtime`, `shift_id`) VALUES
+(1, 0, 'Tanta tanta', 1, 5, 30.6, 1),
+(2, 0, 'abbastanza per un elefante', 2, 6, 35, 2);
 
 -- --------------------------------------------------------
 
@@ -445,13 +469,13 @@ ALTER TABLE `Task`
 -- AUTO_INCREMENT for table `shift`
 --
 ALTER TABLE `shift`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `Task`
 --
 ALTER TABLE `Task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
