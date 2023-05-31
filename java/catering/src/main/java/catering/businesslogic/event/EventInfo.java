@@ -35,6 +35,10 @@ public class EventInfo implements EventItemInfo {
         return this.chef;
     }
 
+    public User getOrganizer(){
+        return this.organizer;
+    }
+
     // STATIC METHODS FOR PERSISTENCE
 
     public static ObservableList<EventInfo> loadAllEventInfo() {

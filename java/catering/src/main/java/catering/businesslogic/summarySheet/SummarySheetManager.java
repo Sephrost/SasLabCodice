@@ -66,8 +66,35 @@ public class SummarySheetManager {
 
 	}
 
-	public void chooseSummarySheet(Event e, ServiceInfo ser) {
-		// implementation
+	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser) throws UseCaseLogicException, SummarySheetException {
+		User user = CatERing.getInstance().getUserManager().getCurrentUser();
+		if (!user.isChef()) {
+			throw new UseCaseLogicException("User is not chef");
+		}
+		if (e.getOrganizer() != user) {
+			throw new SummarySheetException("User is not assigned to the event");
+		}
+		if(!existsSummarySheet(ser)){
+			throw new SummarySheetException("SummarySheet already exists for this service");
+		}
+		SummarySheet r = null;
+		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
+			if (s.getService() == ser) {
+				setCurrentSummarySheet(s);
+				r = s;
+			}
+		}
+		notifySummarySheetSelected(r);
+		return r;
+	}
+
+	public Boolean existsSummarySheet(ServiceInfo ser) {
+		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
+			if (s.getService() == ser) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
@@ -97,6 +124,12 @@ public class SummarySheetManager {
 	public void notifySummarySheetCreated(SummarySheet s) {
 		for (SummarySheetReceiver r : receivers) {
 			r.notifySummarySheetCreated(s);
+		}
+	}
+
+	public void notifySummarySheetSelected(SummarySheet s) {
+		for (SummarySheetReceiver r : receivers) {
+			r.notifySummarySheetSelected(s);
 		}
 	}
 
