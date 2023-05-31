@@ -42,6 +42,10 @@ public class MenuItem {
         return id;
     }
 
+    public KitchenJob getKitchenJob() {
+        return itemKitchenJob;
+    }
+
 
     public String toString() {
         return description;

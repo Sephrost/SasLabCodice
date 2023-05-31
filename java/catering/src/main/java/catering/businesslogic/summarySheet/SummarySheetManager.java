@@ -42,7 +42,6 @@ public class SummarySheetManager {
         }
 
         SummarySheet s = new SummarySheet(service);
-		//[for each kitchenJob in service.getMenu()]
 
         this.setCurrentSummarySheet(s);
         this.notifySummarySheetCreated(s);
@@ -67,7 +66,7 @@ public class SummarySheetManager {
 
 	}
 
-	public void chooseSummarySheet(Event e, Service ser) {
+	public void chooseSummarySheet(Event e, ServiceInfo ser) {
 		// implementation
 	}
 
@@ -96,11 +95,12 @@ public class SummarySheetManager {
 	}
 
 	public void notifySummarySheetCreated(SummarySheet s) {
-		// implementation
+		for (SummarySheetReceiver r : receivers) {
+			r.notifySummarySheetCreated(s);
+		}
 	}
 
 	public void notifyKitchenJobRemoved(KitchenJob kj) {
-		// implementation
 	}
 
 	public void notifyTaskOrderModified() {
