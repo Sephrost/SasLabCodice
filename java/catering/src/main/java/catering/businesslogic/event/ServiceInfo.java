@@ -2,6 +2,7 @@ package catering.businesslogic.event;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import catering.businesslogic.menu.Menu;
 import catering.businesslogic.summarySheet.SummarySheet;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
@@ -28,8 +29,8 @@ public class ServiceInfo implements EventItemInfo {
 	private Date date;
 	private Time startHour;
 	private Time endHour;
-	private int proposedMenu;
-	private int approvedMenu;
+	private Menu proposedMenu;
+	private Menu approvedMenu;
 	private int expected_participants;
 	private int EventId;
 
@@ -70,9 +71,9 @@ public class ServiceInfo implements EventItemInfo {
 	public Time getEndHour() {
 		return endHour;
 	}
-	//getter for menu
-	public int getMenu() {
-		if(approvedMenu != 0)
+	
+	public Menu getMenu() {
+		if(approvedMenu != null)
 			return approvedMenu;
 		else
 			return proposedMenu;
@@ -91,10 +92,9 @@ public class ServiceInfo implements EventItemInfo {
 	}
 
 	// STATIC METHODS FOR PERSISTENCE
-	// TODO: cambiare query e mettere i campi giusti
 	public static ObservableList<ServiceInfo> loadServiceInfoForEvent(int event_id) {
 		ObservableList<ServiceInfo> result = FXCollections.observableArrayList();
-		String query = "SELECT *FROM Services WHERE event_id = " + event_id;
+		String query = "SELECT * FROM Services WHERE event_id = " + event_id;
 		PersistenceManager.executeQuery(query, new ResultHandler() {
 			@Override
 			public void handle(ResultSet rs) throws SQLException {
@@ -106,12 +106,23 @@ public class ServiceInfo implements EventItemInfo {
 				serv.notes = rs.getString("notes");
 				serv.location = rs.getString("location");
 				serv.state = State.valueOf(rs.getString("state"));
-				serv.proposedMenu = rs.getInt("proposed_menu_id");
-				serv.approvedMenu = rs.getInt("approved_menu_id");
 				serv.date = rs.getDate("service_date");
 				serv.startHour = rs.getTime("time_start");
 				serv.endHour = rs.getTime("time_end");
 				serv.expected_participants = rs.getInt("expected_participants");
+				
+				
+				int proposedMenuId = rs.getInt("proposed_menu_id");
+				int approvedMenuId = rs.getInt("approved_menu_id");
+				Menu.loadAllMenus().forEach(menu -> {
+					if (menu.getId() == proposedMenuId) {
+						serv.proposedMenu = menu;
+					}
+					if (menu.getId() == approvedMenuId) {
+						serv.approvedMenu = menu;
+					}
+				});
+				
 				result.add(serv);
 			}
 		});

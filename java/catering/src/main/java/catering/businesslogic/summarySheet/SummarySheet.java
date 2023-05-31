@@ -12,6 +12,8 @@ import java.util.List;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.event.ServiceInfo.State;
 import catering.businesslogic.kitchenJob.KitchenJob;
+import catering.businesslogic.menu.Menu;
+import catering.businesslogic.menu.MenuItem;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
@@ -23,13 +25,18 @@ import javafx.collections.ObservableList;
 
 public class SummarySheet {
 	private final ServiceInfo service;
-	private List<Task> task;
+	private List<Task> tasks;
 	private User chef;
 	// TODO: controllare menù da aggiungere
 
 	public SummarySheet(ServiceInfo service) {
 		this.service = service;
-		this.task = new ArrayList<Task>();
+		this.tasks = new ArrayList<Task>();
+
+		for(MenuItem item : service.getMenu().getAllMenuItems()) {
+			Task task = new Task(item.getKitchenJob());
+			this.tasks.add(task);
+		}
 	}
 
 	public ServiceInfo getService() {
@@ -111,7 +118,7 @@ public class SummarySheet {
 		
 		for(ServiceInfo service : taskList.keySet()) {
 			SummarySheet summarySheet = new SummarySheet(service);
-			summarySheet.task = taskList.get(service);
+			summarySheet.tasks = taskList.get(service);
 			summarySheet.chef = chefList.get(service);
 			summarySheets.add(summarySheet);
 		}

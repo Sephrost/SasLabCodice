@@ -509,6 +509,14 @@ public class Menu {
         });
     }
 
+    public ObservableList<MenuItem> getAllMenuItems() {
+        ObservableList<MenuItem> result = FXCollections.observableArrayList();
+        for (Section sec : sections) {
+            result.addAll(sec.getItems());
+        }
+        result.addAll(freeItems);
+        return result;
+    }
 
     public static void saveFreeItemOrder(Menu m) {
         String upd = "UPDATE MenuItems SET position = ? WHERE id = ?";

@@ -19,6 +19,10 @@ public class Task {
     private KitchenJob kj;
     private Shift shift;
 
+    public Task(KitchenJob kj) {
+        this.kj = kj;
+    }
+
     public void setShift(Shift shift) {
         // implementation
     }
