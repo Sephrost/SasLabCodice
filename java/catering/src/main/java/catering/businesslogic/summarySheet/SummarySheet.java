@@ -57,8 +57,19 @@ public class SummarySheet {
 		return task;
 	}
 
-	public void removeKitchenJob(KitchenJob kj) {
-		// implementation
+	public KitchenJob removeKitchenJob(KitchenJob kj) {
+		if(kj.isPreparation()){
+			for(Task t : this.tasks){
+				if(t.getKitchenJob() == kj){
+					this.tasks.remove(t);
+				}
+			}
+			
+		}else if(kj.isRecipe()){
+			
+		}
+
+		return kj;
 	}
 
 	public void removeTask(Task task) {
