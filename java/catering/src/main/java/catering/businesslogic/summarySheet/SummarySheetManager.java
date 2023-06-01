@@ -59,8 +59,11 @@ public class SummarySheetManager {
 		return t;
 	}
 
-	public void removeKitchenJob(KitchenJob kj) {
-		// implementation
+	public void removeKitchenJob(KitchenJob kj) throws UseCaseLogicException {
+		if (this.currentSummarySheet == null) {
+			throw new UseCaseLogicException("No summary sheet in use");
+		}
+		this.currentSummarySheet.removeKitchenJob(kj);
 	}
 
 	public void reorderTaskPosition(Task task, int position) {
