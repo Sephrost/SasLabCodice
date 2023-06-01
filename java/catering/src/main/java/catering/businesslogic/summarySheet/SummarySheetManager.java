@@ -50,8 +50,13 @@ public class SummarySheetManager {
     }
 
 
-	public void addKitchenJob(KitchenJob kj) {
-		// implementation
+	public Task addKitchenJob(KitchenJob kj) throws UseCaseLogicException {
+		if (this.currentSummarySheet == null) {
+			throw new UseCaseLogicException("No summary sheet in use");
+		}
+		Task t = this.currentSummarySheet.addKitchenJob(kj);
+		this.notifyKitchenJobAdded(kj);
+		return t;
 	}
 
 	public void removeKitchenJob(KitchenJob kj) {
@@ -130,6 +135,12 @@ public class SummarySheetManager {
 	public void notifySummarySheetSelected(SummarySheet s) {
 		for (SummarySheetReceiver r : receivers) {
 			r.notifySummarySheetSelected(s);
+		}
+	}
+
+	public void notifyKitchenJobAdded(KitchenJob kj) {
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyKitchenJobAdded(kj);
 		}
 	}
 

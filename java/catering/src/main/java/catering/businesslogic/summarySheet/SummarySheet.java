@@ -51,8 +51,10 @@ public class SummarySheet {
 		// implementation
 	}
 
-	public void addKitchenJob(KitchenJob kj) {
-		// implementation
+	public Task addKitchenJob(KitchenJob kj) {
+		Task task = new Task(kj);
+		this.tasks.add(task);
+		return task;
 	}
 
 	public void removeKitchenJob(KitchenJob kj) {
