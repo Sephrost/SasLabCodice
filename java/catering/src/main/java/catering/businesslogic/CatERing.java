@@ -58,4 +58,8 @@ public class CatERing {
 		return summarySheetMgr;
 	}
 
+	public ShiftManager getShiftManager() {
+		return shiftMgr;
+	}
+
 }

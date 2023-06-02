@@ -15,6 +15,7 @@ import catering.businesslogic.event.ServiceInfo.State;
 import catering.businesslogic.kitchenJob.KitchenJob;
 import catering.businesslogic.menu.Menu;
 import catering.businesslogic.shiftManagement.Shift;
+import catering.businesslogic.shiftManagement.ShiftBoard;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
@@ -24,31 +25,31 @@ public class SummarySheetManager {
 	private SummarySheet currentSummarySheet;
 	private ArrayList<SummarySheetReceiver> receivers;
 
-	public SummarySheet createSummarySheet(EventInfo event, ServiceInfo service) throws UseCaseLogicException,EventException{
-        User user = CatERing.getInstance().getUserManager().getCurrentUser();
-        if(!user.isChef()){
-            throw new UseCaseLogicException("User is not chef");
-        }
-        if(event.getAssignedChef() != user){
-            throw new UseCaseLogicException("User is not assigned to the event");
-        }
-       
-        for(SummarySheet s : SummarySheet.getAllSummarySheets()){
-            if(s.getService() == service){
-                setCurrentSummarySheet(s);
+	public SummarySheet createSummarySheet(EventInfo event, ServiceInfo service)
+			throws UseCaseLogicException, EventException {
+		User user = CatERing.getInstance().getUserManager().getCurrentUser();
+		if (!user.isChef()) {
+			throw new UseCaseLogicException("User is not chef");
+		}
+		if (event.getAssignedChef() != user) {
+			throw new UseCaseLogicException("User is not assigned to the event");
+		}
+
+		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
+			if (s.getService() == service) {
+				setCurrentSummarySheet(s);
 				System.out.println("SummarySheet already exists");
-                return s;
-            }
-        }
+				return s;
+			}
+		}
 
-        SummarySheet s = new SummarySheet(service);
+		SummarySheet s = new SummarySheet(service);
 
-        this.setCurrentSummarySheet(s);
-        this.notifySummarySheetCreated(s);
+		this.setCurrentSummarySheet(s);
+		this.notifySummarySheetCreated(s);
 
 		return s;
-    }
-
+	}
 
 	public Task addKitchenJob(KitchenJob kj) throws UseCaseLogicException {
 		if (this.currentSummarySheet == null) {
@@ -67,26 +68,27 @@ public class SummarySheetManager {
 		this.notifyKitchenJobRemoved(kj);
 	}
 
-	public void reorderTaskPosition(Task task, int position) throws UseCaseLogicException, SummarySheetException{
-		if(this.currentSummarySheet == null){
+	public void reorderTaskPosition(Task task, int position) throws UseCaseLogicException, SummarySheetException {
+		if (this.currentSummarySheet == null) {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}
-		if(position < 0 || position > this.currentSummarySheet.getTasks().size()){
+		if (position < 0 || position > this.currentSummarySheet.getTasks().size()) {
 			throw new UseCaseLogicException("Invalid position");
 		}
-		if(currentSummarySheet.hasTask(task) == false){
+		if (currentSummarySheet.hasTask(task) == false) {
 			throw new UseCaseLogicException("Invalid task");
 		}
 
-		this.currentSummarySheet.swapTaskPositions(task,position);
+		this.currentSummarySheet.swapTaskPositions(task, position);
 		notifyTaskOrderModified();
 	}
 
-	public SummarySheet getCurrentBoard() {
-		return CatERing.getInstance().
+	public ShiftBoard getCurrentBoard() {
+		return CatERing.getInstance().getShiftManager().getCurrentBoard();
 	}
 
-	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser) throws UseCaseLogicException, SummarySheetException {
+	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser)
+			throws UseCaseLogicException, SummarySheetException {
 		User user = CatERing.getInstance().getUserManager().getCurrentUser();
 		if (!user.isChef()) {
 			throw new UseCaseLogicException("User is not chef");
@@ -94,7 +96,7 @@ public class SummarySheetManager {
 		if (e.getOrganizer() != user) {
 			throw new SummarySheetException("User is not assigned to the event");
 		}
-		if(!existsSummarySheet(ser)){
+		if (!existsSummarySheet(ser)) {
 			throw new SummarySheetException("SummarySheet already exists for this service");
 		}
 		SummarySheet r = null;
