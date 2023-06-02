@@ -1,29 +1,18 @@
 package catering.businesslogic.summarySheet;
 
-import java.util.List;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.*;
-import catering.businesslogic.event.ServiceInfo.State;
 import catering.businesslogic.kitchenJob.KitchenJob;
-import catering.businesslogic.menu.Menu;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.shiftManagement.ShiftBoard;
 import catering.businesslogic.user.User;
-import catering.persistence.PersistenceManager;
-import catering.persistence.ResultHandler;
-import javafx.event.Event;
 
 public class SummarySheetManager {
 	private SummarySheet currentSummarySheet;
-	private ArrayList<SummarySheetReceiver> receivers;
+	private ArrayList<SummarySheetReceiver> receivers = new ArrayList<>();
 
 	public SummarySheet createSummarySheet(EventInfo event, ServiceInfo service)
 			throws UseCaseLogicException, EventException {
@@ -141,6 +130,7 @@ public class SummarySheetManager {
 
 	public boolean checkSummarySheetExist() {
 		// implementation
+		return true;
 	}
 
 	public void notifySummarySheetCreated(SummarySheet s) {

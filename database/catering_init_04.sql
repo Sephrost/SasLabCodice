@@ -57,34 +57,36 @@ INSERT INTO `Events` (`id`, `name`, `date_start`, `date_end`, `expected_particip
 
 CREATE TABLE `KitchenJobs` (
   `id` int(11) NOT NULL,
-  `name` tinytext DEFAULT NULL
+  `name` tinytext DEFAULT NULL,
+	`type` enum('RECIPE', 'PREPARATION') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `KitchenJobs`
 --
 
-INSERT INTO `KitchenJobs` (`id`, `name`) VALUES
-(1, 'Vitello tonnato'),
-(2, 'Carpaccio di spada'),
-(3, 'Alici marinate'),
-(4, 'Insalata di riso'),
-(5, 'Penne al sugo di baccalà'),
-(6, 'Pappa al pomodoro'),
-(7, 'Hamburger con bacon e cipolla caramellata'),
-(8, 'Salmone al forno'),
-(9, 'Croissant'),
-(10, 'Pane al cioccolato'),
-(11, 'Girelle all\'uvetta'),
-(12, 'Panini al latte'),
-(13, 'Biscotti di pasta frolla'),
-(14, 'Lingue di gatto'),
-(15, 'Bigné farciti'),
-(16, 'Pizzette'),
-(17, 'Tramezzini'),
-(18, 'Sorbetto al limone'),
-(19, 'Torta Saint Honoré'),
-(20, 'Risotto alla zucca');
+INSERT INTO `KitchenJobs` (`id`, `name`, `type`) VALUES
+-- rewrite those alterning the type
+(1, 'Votello tonnato', 'RECIPE'),
+(2, 'Carpaccio di spada', 'PREPARATION'),
+(3, 'Alici marinate', 'RECIPE'),
+(4, 'Insalata di riso', 'PREPARATION'),
+(5, 'Penne al sugo di baccalà', 'RECIPE'),
+(6, 'Pappa al pomodoro', 'PREPARATION'),
+(7, 'Hamburger con bacon e cipolla caramellata', 'RECIPE'),
+(8, 'Salmone al forno', 'PREPARATION'),
+(9, 'Croissant', 'RECIPE'),
+(10, 'Pane al cioccolato', 'PREPARATION'),
+(11, 'Girelle all\'uvetta', 'RECIPE'),
+(12, 'Panini al latte', 'PREPARATION'),
+(13, 'Biscotti di pasta frolla', 'RECIPE'),
+(14, 'Lingue di gatto', 'PREPARATION'),
+(15, 'Bigné farciti', 'RECIPE'),
+(16, 'Pizzette', 'PREPARATION'),
+(17, 'Tramezzini', 'RECIPE'),
+(18, 'Sorbetto al limone', 'PREPARATION'),
+(19, 'Torta Saint Honoré', 'RECIPE'),
+(20, 'Risotto alla zucca', 'PREPARATION');
 
 -- --------------------------------------------------------
 
