@@ -8,5 +8,7 @@ public interface SummarySheetReceiver {
     void notifySummarySheetCreated(SummarySheet sheet);
     void notifySummarySheetSelected(SummarySheet sheet);
     void notifyKitchenJobAdded(KitchenJob kJ);
+    void notifyKitchenJobRemoved(KitchenJob kJ);
+    void notifyTaskOrderModified();
 
 }

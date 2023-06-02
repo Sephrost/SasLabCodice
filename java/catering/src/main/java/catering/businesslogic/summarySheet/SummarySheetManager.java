@@ -64,14 +64,26 @@ public class SummarySheetManager {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}
 		this.currentSummarySheet.removeKitchenJob(kj);
+		this.notifyKitchenJobRemoved(kj);
 	}
 
-	public void reorderTaskPosition(Task task, int position) {
-		// implementation
+	public void reorderTaskPosition(Task task, int position) throws UseCaseLogicException, SummarySheetException{
+		if(this.currentSummarySheet == null){
+			throw new UseCaseLogicException("No summary sheet in use");
+		}
+		if(position < 0 || position > this.currentSummarySheet.getTasks().size()){
+			throw new UseCaseLogicException("Invalid position");
+		}
+		if(currentSummarySheet.hasTask(task) == false){
+			throw new UseCaseLogicException("Invalid task");
+		}
+
+		this.currentSummarySheet.swapTaskPositions(task,position);
+		notifyTaskOrderModified();
 	}
 
 	public SummarySheet getCurrentBoard() {
-
+		return CatERing.getInstance().
 	}
 
 	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser) throws UseCaseLogicException, SummarySheetException {
@@ -148,6 +160,9 @@ public class SummarySheetManager {
 	}
 
 	public void notifyKitchenJobRemoved(KitchenJob kj) {
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyKitchenJobRemoved(kj);
+		}
 	}
 
 	public void notifyTaskOrderModified() {

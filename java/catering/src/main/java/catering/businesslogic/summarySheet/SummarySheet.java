@@ -58,17 +58,12 @@ public class SummarySheet {
 	}
 
 	public KitchenJob removeKitchenJob(KitchenJob kj) {
-		if(kj.isPreparation()){
-			for(Task t : this.tasks){
-				if(t.getKitchenJob() == kj){
-					this.tasks.remove(t);
-				}
+		for(Task task : this.tasks) {
+			if(task.getKitchenJob() == kj) {
+				this.tasks.remove(task);
+				return kj;
 			}
-			
-		}else if(kj.isRecipe()){
-			
 		}
-
 		return kj;
 	}
 
@@ -76,13 +71,21 @@ public class SummarySheet {
 		// implementation
 	}
 
-	public boolean hasTask() {
-		// implementation
-		return true;
+	public boolean hasTask(Task task) {
+		for(Task t : this.tasks) {
+			if(t.equals(task)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public List<Task> getTasks() {
+		return this.tasks;
 	}
 
 	public void swapTaskPositions(Task task, int position) {
-		// implementation
+		this.tasks.remove(task);
+		this.tasks.add(position, task);
 	}
 
 	public void assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {

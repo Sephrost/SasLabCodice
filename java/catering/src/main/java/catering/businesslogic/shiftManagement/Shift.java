@@ -1,10 +1,20 @@
+import java.sql.*;
 import java.time.Duration;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 
+import catering.businesslogic.user.User;
+import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Shift {
+    int id;
     private Date date;
-    private Duration startTime;
-    private Duration endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     public void decreaseAvailableTime(User c, int t) {
         // implementation
@@ -20,5 +30,22 @@ public class Shift {
 
     public boolean isAvailable(User c, Duration tm) {
         // implementation
+    }
+
+    public static ObservableList<Shift> getAllShifts() {
+        ObservableList<Shift> shifts = FXCollections.observableArrayList();
+        String query = "SELECT * FROM Shift";
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                Shift shift = new Shift();
+                shift.id = rs.getInt("id");
+                shift.date = rs.getDate("date");
+                shift.startTime = rs.getTime("startTime").toLocalTime();
+                shift.endTime = rs.getTime("endTime").toLocalTime();
+                shifts.add(shift);
+            }
+        });
+        return shifts;
     }
 }

@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Database: `catering`
 --
 
+CREATE DATABASE `catering`;
+USE `catering`;
+
 -- --------------------------------------------------------
 
 --
@@ -356,7 +359,7 @@ CREATE TABLE `Tasks` (
 
 INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimatedtime`, `shift_id`) VALUES
 (1, 0, 'Tanta tanta', 1, 5, 30.6, 1),
-(2, 0, 'abbastanza per un elefante', 2, 6, 35, 2);
+(2, 0, 'Abbastanza per un elefante', 2, 6, 35, 2);
 
 -- --------------------------------------------------------
 
@@ -390,6 +393,27 @@ INSERT INTO `UserRoles` (`user_id`, `role_id`) VALUES
 
 -- --------------------------------------------------------
 
+--
+-- Struttura della tabella `shiftboard`
+--
+
+CREATE TABLE `Shiftboard` (
+  `id` int(11) NOT NULL,
+  `shift_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `state` enum('occupied','avaiable') NOT NULL
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `UserRoles`
+--
+
+INSERT INTO `Shiftboard` (`id`, `shift_id`,`user_id`,`state`) VALUES
+(1, 1, 4, 'occupied'),
+(2, 1, 5, 'avaiable'),
+(3, 2, 4, 'avaiable'),
+(4, 2, 5, 'occupied');
 --
 -- Table structure for table `Users`
 --
@@ -450,6 +474,12 @@ ALTER TABLE `Shifts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indici per le tabelle `shiftboard`
+--
+ALTER TABLE `Shiftboard`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `SummarySheets`
 --
 ALTER TABLE `SummarySheets`
@@ -476,6 +506,12 @@ ALTER TABLE `Shifts`
 --
 ALTER TABLE `Tasks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+-- 
+-- AUTO_INCREMENT for table `shiftboard`
+--
+ALTER TABLE `Shiftboard`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -4,21 +4,14 @@ import java.time.Duration;
 import java.util.ArrayList;
 
 public class ShiftManager {
-    private static ShiftManager instance;
     private ShiftBoard shiftBoard;
 
-    private ShiftManager() {
-    }
-
-    public static ShiftManager getInstance() {
-        if (instance == null) {
-            instance = new ShiftManager();
-        }
-        return instance;
+    public ShiftManager() {
+        this.shiftBoard = new ShiftBoard();
     }
 
     public ShiftBoard getCurrentBoard() {
-        // implementation
+        return this.shiftBoard;
     }
 
     public boolean isAssigned(User c, Shift s) {

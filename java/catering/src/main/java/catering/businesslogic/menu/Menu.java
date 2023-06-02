@@ -300,6 +300,7 @@ public class Menu {
     }
 
     // STATIC METHODS FOR PERSISTENCE
+    
 
     public static void saveNewMenu(Menu m) {
         String menuInsert = "INSERT INTO catering.Menus (title, owner_id, published) VALUES (?, ?, ?);";

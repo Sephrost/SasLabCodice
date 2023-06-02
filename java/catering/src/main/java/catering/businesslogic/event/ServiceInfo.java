@@ -145,8 +145,17 @@ public class ServiceInfo implements EventItemInfo {
 				serv.notes = rs.getString("notes");
 				serv.location = rs.getString("location");
 				serv.state = State.valueOf(rs.getString("state"));
-				serv.proposedMenu = rs.getInt("proposed_menu_id");
-				serv.approvedMenu = rs.getInt("approved_menu_id");
+				int proposedMenu = rs.getInt("proposed_menu_id");
+				int approvedMenu = rs.getInt("approved_menu_id");
+
+				Menu.loadAllMenus().forEach(menu -> {
+					if (menu.getId() == proposedMenu) {
+						serv.proposedMenu = menu;
+					}
+					if (menu.getId() == approvedMenu) {
+						serv.approvedMenu = menu;
+					}
+				});
 				serv.date = rs.getDate("service_date");
 				serv.startHour = rs.getTime("time_start");
 				serv.endHour = rs.getTime("time_end");
