@@ -7,7 +7,7 @@ import java.sql.*;
 public class PersistenceManager {
     private static String url = "jdbc:mysql://localhost:3306/catering?serverTimezone=UTC";
     private static String username = "root";
-    private static String password = "4321test";
+    private static String password = "password";
 
     private static int lastId;
 
@@ -91,4 +91,12 @@ public class PersistenceManager {
     public static int getLastId() {
         return lastId;
     }
+
+	public static Boolean testDB(){
+		try(Connection conn = DriverManager.getConnection(url, username, password)){
+			return true;
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }
