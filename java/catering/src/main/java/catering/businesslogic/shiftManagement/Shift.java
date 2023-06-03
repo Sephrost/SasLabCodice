@@ -1,7 +1,9 @@
-import java.sql.*;
+package catering.businesslogic.shiftManagement;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
 
 import catering.businesslogic.user.User;
@@ -34,15 +36,15 @@ public class Shift {
 
     public static ObservableList<Shift> getAllShifts() {
         ObservableList<Shift> shifts = FXCollections.observableArrayList();
-        String query = "SELECT * FROM Shift";
+        String query = "SELECT * FROM Shifts";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
                 Shift shift = new Shift();
                 shift.id = rs.getInt("id");
                 shift.date = rs.getDate("date");
-                shift.startTime = rs.getTime("startTime").toLocalTime();
-                shift.endTime = rs.getTime("endTime").toLocalTime();
+                shift.startTime = rs.getTime("starttime").toLocalTime();
+                shift.endTime = rs.getTime("endtime").toLocalTime();
                 shifts.add(shift);
             }
         });

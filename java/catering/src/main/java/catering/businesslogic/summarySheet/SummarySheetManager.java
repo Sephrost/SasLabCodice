@@ -14,6 +14,10 @@ public class SummarySheetManager {
 	private SummarySheet currentSummarySheet;
 	private ArrayList<SummarySheetReceiver> receivers = new ArrayList<>();
 
+	public SummarySheetManager() {
+		// Task.loadLastId();
+	}
+
 	public SummarySheet createSummarySheet(EventInfo event, ServiceInfo service)
 			throws UseCaseLogicException, EventException {
 		User user = CatERing.getInstance().getUserManager().getCurrentUser();
@@ -86,7 +90,7 @@ public class SummarySheetManager {
 			throw new SummarySheetException("User is not assigned to the event");
 		}
 		if (!existsSummarySheet(ser)) {
-			throw new SummarySheetException("SummarySheet already exists for this service");
+			throw new SummarySheetException("SummarySheet does not exist for this service an event");
 		}
 		SummarySheet r = null;
 		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {

@@ -9,7 +9,7 @@ public class KitchenJobManager {
     }
 
     public ObservableList<KitchenJob> getKitchenJobs() {
-        return FXCollections.unmodifiableObservableList(KitchenJob.getAllKitchenJobs());
+        return FXCollections.unmodifiableObservableList(KitchenJob.loadAllKitchenJobs());
     }
 }
 

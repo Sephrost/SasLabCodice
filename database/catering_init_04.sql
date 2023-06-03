@@ -45,7 +45,7 @@ CREATE TABLE `Events` (
 --
 
 INSERT INTO `Events` (`id`, `name`, `date_start`, `date_end`, `expected_participants`, `organizer_id`, `chef_id`) VALUES
-(1, 'Convegno Agile Community', '2020-09-25', '2020-09-25', 100, 2, 0),
+(1, 'Convegno Agile Community', '2020-09-25', '2020-09-25', 100, 2, 2),
 (2, 'Compleanno di Manuela', '2020-08-13', '2020-08-13', 25, 2, 0),
 (3, 'Fiera del Sedano Rapa', '2020-10-02', '2020-10-04', 400, 1, 0);
 
@@ -306,7 +306,7 @@ INSERT INTO `Services` (`id`, `event_id`, `name`, `notes`, `location`, `state`, 
 
 CREATE TABLE `Shifts` (
   `id` int(11) NOT NULL,
-  `data` date NOT NULL,
+  `date` date NOT NULL,
   `starttime` time NOT NULL,
   `endtime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -315,7 +315,7 @@ CREATE TABLE `Shifts` (
 -- Dumping data for table `Shifts`
 --
 
-INSERT INTO `Shifts` (`id`, `data`, `starttime`, `endtime`) VALUES
+INSERT INTO `Shifts` (`id`, `date`, `starttime`, `endtime`) VALUES
 (1, '2020-04-13', '10:00:00', '11:00:00'),
 (2, '2020-04-13', '11:00:00', '12:00:00');
 
@@ -350,8 +350,8 @@ CREATE TABLE `Tasks` (
   `completed` tinyint(1) NOT NULL,
   `quantity` varchar(30) NOT NULL,
   `kitchenjob_id` int(11) NOT NULL,
-  `cook_id` int(11) NOT NULL,
-  `estimatedtime` double NOT NULL,
+  `cook_id` int(11) NOT NULL, -- maybe we need to add a business rule there
+  `estimated_time` double NOT NULL,
   `shift_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -359,7 +359,7 @@ CREATE TABLE `Tasks` (
 -- Dumping data for table `Tasks`
 --
 
-INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimatedtime`, `shift_id`) VALUES
+INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimated_time`, `shift_id`) VALUES
 (1, 0, 'Tanta tanta', 1, 5, 30.6, 1),
 (2, 0, 'Abbastanza per un elefante', 2, 6, 35, 2);
 

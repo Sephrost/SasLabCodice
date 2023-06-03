@@ -1,6 +1,7 @@
 package catering.businesslogic.summarySheet;
 
 import java.security.Provider.Service;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -18,12 +19,15 @@ import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
+import catering.persistence.BatchUpdateHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 
 
 public class SummarySheet {
+
 	private final ServiceInfo service;
 	private List<Task> tasks;
 	private User chef;
@@ -42,6 +46,11 @@ public class SummarySheet {
 	public ServiceInfo getService() {
 		return service;
 	}
+
+	public User getChef() {
+		return chef;
+	}
+
 
 	public void addAssignment(KitchenJob kj) {
 		// implementation
@@ -110,7 +119,6 @@ public class SummarySheet {
 		ObservableList<SummarySheet> summarySheets = FXCollections.observableArrayList();
 		HashMap<ServiceInfo, List<Task>> taskList = new HashMap<ServiceInfo, List<Task>>();
 		HashMap<ServiceInfo, User> chefList = new HashMap<ServiceInfo, User>();
-		
 			PersistenceManager.executeQuery(query, new ResultHandler() {
 				@Override
 				public void handle(ResultSet rs) throws SQLException {
@@ -141,4 +149,27 @@ public class SummarySheet {
 		
 		return summarySheets;
 	}
+	
+
+	public void saveSheet(SummarySheet s){
+		Task.saveAllTasks(s.getTasks());
+		int serviceId = s.getService().getId();
+
+		// make batch insert into summarysheet
+		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?)";
+		PersistenceManager.executeBatchUpdate(query, s.getTasks().size(), new BatchUpdateHandler() {
+			@Override
+			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, serviceId);
+				ps.setInt(2, s.getTasks().get(i).getId());
+				ps.setInt(3, s.getChef().getId());
+			}
+			@Override
+			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
+				return;
+			}
+		});
+	
+	}
+
 }

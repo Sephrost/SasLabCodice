@@ -117,7 +117,7 @@ public class MenuItem {
                 MenuItem mi = new MenuItem();
                 mi.description = rs.getString("description");
                 result.add(mi);
-                recids.add(rs.getInt("recipe_id"));
+                recids.add(rs.getInt("kitchenjobs_id"));
             }
         });
 

@@ -39,6 +39,10 @@ public class EventInfo implements EventItemInfo {
         return this.organizer;
     }
 
+		public String getName() {
+			return name;
+		}
+
     // STATIC METHODS FOR PERSISTENCE
 
     public static ObservableList<EventInfo> loadAllEventInfo() {
