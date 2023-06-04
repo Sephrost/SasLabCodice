@@ -7,7 +7,7 @@ import catering.businesslogic.user.User;
 import catering.businesslogic.summarySheet.SummarySheet;
 import catering.persistence.PersistenceManager;
 
-public class TestCatERing1 {
+public class TestCatERing1_1a {
 
 	public static void main(String[] args) {
 
