@@ -39,9 +39,13 @@ public class EventInfo implements EventItemInfo {
         return this.organizer;
     }
 
-		public String getName() {
-			return name;
-		}
+	public String getName() {
+		return name;
+	}
+
+	public User getChef() {
+		return chef;
+	}
 
     // STATIC METHODS FOR PERSISTENCE
 

@@ -36,6 +36,7 @@ public class SummarySheet {
 	public SummarySheet(ServiceInfo service) {
 		this.service = service;
 		this.tasks = new ArrayList<Task>();
+		this.chef = service.getEventInfo().getChef();
 
 		for(MenuItem item : service.getMenu().getAllMenuItems()) {
 			Task task = new Task(item.getKitchenJob());
@@ -151,7 +152,7 @@ public class SummarySheet {
 	}
 	
 
-	public void saveSheet(SummarySheet s){
+	public static void saveSheet(SummarySheet s){
 		Task.saveAllTasks(s.getTasks());
 		int serviceId = s.getService().getId();
 

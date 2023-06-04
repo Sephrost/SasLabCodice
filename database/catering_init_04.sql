@@ -348,11 +348,11 @@ INSERT INTO `SummarySheets` (`service_id`, `task_id`, `chef_id`) VALUES
 CREATE TABLE `Tasks` (
   `id` int(11) NOT NULL,
   `completed` tinyint(1) NOT NULL,
-  `quantity` varchar(30) NOT NULL,
+  `quantity` varchar(30) ,
   `kitchenjob_id` int(11) NOT NULL,
-  `cook_id` int(11) NOT NULL, -- maybe we need to add a business rule there
-  `estimated_time` double NOT NULL,
-  `shift_id` int(11) NOT NULL
+  `cook_id` int(11) , -- maybe we need to add a business rule there
+  `estimated_time` double ,
+  `shift_id` int(11) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

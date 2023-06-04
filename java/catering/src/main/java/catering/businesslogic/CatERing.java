@@ -7,6 +7,7 @@ import catering.businesslogic.kitchenJob.*;
 import catering.businesslogic.summarySheet.SummarySheetManager;
 import catering.businesslogic.user.UserManager;
 import catering.persistence.MenuPersistence;
+import catering.persistence.SummarySheetPersistence;
 
 public class CatERing {
 	private static CatERing singleInstance;
@@ -34,6 +35,7 @@ public class CatERing {
 		eventMgr = new EventManager();
 		menuPersistence = new MenuPersistence();
 		summarySheetMgr = new SummarySheetManager();
+		summarySheetMgr.addReceiver(new SummarySheetPersistence());
 		menuMgr.addEventReceiver(menuPersistence);
 		shiftMgr = new ShiftManager();
 	}

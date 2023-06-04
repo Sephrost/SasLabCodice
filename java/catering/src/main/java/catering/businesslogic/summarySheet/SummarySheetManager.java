@@ -12,10 +12,10 @@ import catering.businesslogic.user.User;
 
 public class SummarySheetManager {
 	private SummarySheet currentSummarySheet;
-	private ArrayList<SummarySheetReceiver> receivers = new ArrayList<>();
+	private ArrayList<SummarySheetReceiver> receivers;
 
 	public SummarySheetManager() {
-		// Task.loadLastId();
+		this.receivers = new ArrayList<>();
 	}
 
 	public SummarySheet createSummarySheet(EventInfo event, ServiceInfo service)
@@ -29,9 +29,8 @@ public class SummarySheetManager {
 		}
 
 		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
-			if (s.getService() == service) {
+			if (s.getService().equals(service)) {
 				setCurrentSummarySheet(s);
-				System.out.println("SummarySheet already exists");
 				return s;
 			}
 		}
@@ -94,7 +93,7 @@ public class SummarySheetManager {
 		}
 		SummarySheet r = null;
 		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
-			if (s.getService() == ser) {
+			if (s.getService().equals(ser)) {
 				setCurrentSummarySheet(s);
 				r = s;
 			}
@@ -105,7 +104,7 @@ public class SummarySheetManager {
 
 	public Boolean existsSummarySheet(ServiceInfo ser) {
 		for (SummarySheet s : SummarySheet.getAllSummarySheets()) {
-			if (s.getService() == ser) {
+			if (s.getService().equals(ser)) {
 				return true;
 			}
 		}
@@ -135,6 +134,14 @@ public class SummarySheetManager {
 	public boolean checkSummarySheetExist() {
 		// implementation
 		return true;
+	}
+
+	//
+	// Receiver methods
+	//
+
+	public void addReceiver(SummarySheetReceiver r) {
+		receivers.add(r);
 	}
 
 	public void notifySummarySheetCreated(SummarySheet s) {

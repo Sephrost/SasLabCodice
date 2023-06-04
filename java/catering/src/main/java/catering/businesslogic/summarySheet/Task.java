@@ -73,7 +73,8 @@ public class Task {
                 task.kj = KitchenJob.loadKitchenJobById(rs.getInt("kitchenjob_id"));
                 task.cook = User.loadUserById(rs.getInt("cook_id"));
                 task.estimatedTime = Duration.ofMinutes(rs.getInt("estimated_time"));
-            }
+				task.shift = Shift.loadShift(rs.getInt("shift_id"));
+			}
         });
         return task;
     }
@@ -93,14 +94,33 @@ public class Task {
 	// }
 
 	public static void saveAllTasks(List<Task> task) {
-		String query = "INSERT INTO Tasks (id, completed, quantity, estimated_time, cook_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, task.size(), new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
-				ps.setBoolean(2, task.get(i).completed);
-				ps.setString(3, task.get(i).quantity);
-				ps.setDouble(4, task.get(i).estimatedTime.toMinutes());
-				ps.setInt(5, task.get(i).cook.getId());
+				ps.setBoolean(1, task.get(i).completed);
+				if (task.get(i).quantity == null) {
+					ps.setNull(2, java.sql.Types.VARCHAR);
+				} else {
+					ps.setString(2, task.get(i).quantity);
+				}
+				ps.setString(2, task.get(i).quantity);
+				if (task.get(i).estimatedTime == null) {
+					ps.setNull(3, java.sql.Types.INTEGER);
+				} else {
+					ps.setLong(3, task.get(i).estimatedTime.toMinutes());
+				}
+				if (task.get(i).cook == null) {
+					ps.setNull(4, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(4, task.get(i).cook.getId());
+				}
+				if (task.get(i).shift == null) {
+					ps.setNull(5, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(5, task.get(i).shift.getId());
+				}
+				
 				ps.setInt(6, task.get(i).kj.getId());
 			}
 

@@ -1,12 +1,9 @@
 package catering.businesslogic.tests;
 
 import catering.businesslogic.CatERing;
-import catering.businesslogic.UseCaseLogicException;
-import catering.businesslogic.event.EventException;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.user.User;
-import catering.businesslogic.kitchenJob.KitchenJob;
 import catering.businesslogic.summarySheet.SummarySheet;
 import catering.persistence.PersistenceManager;
 
@@ -30,7 +27,7 @@ public class TestCatERing1 {
 		EventInfo ev = app.getEventManager().getEventsInfo().get(0);
 		ServiceInfo serv = ev.getServices().get(0);
 		System.out.println("Testing for event: " + ev.getName() + " and service: " + serv.getName());
-
+		
 		// Testing Creation of summary sheet
 		try {
 			System.out.println("Creating summary sheet #1...");
@@ -39,6 +36,19 @@ public class TestCatERing1 {
 			try {
 				app.getSummarySheetManager().chooseSummarySheet(ev,serv);
 				System.out.println("Summary sheet can be chosen correctly!");
+
+				// try opening it form another user
+				try {
+					System.out.println("Trying to open summary sheet from another user...");
+					app.getUserManager().loginWithUsername("Tony");
+					System.out.println("Logged in as " + app.getUserManager().getCurrentUser().getUserName());
+					app.getSummarySheetManager().chooseSummarySheet(ev,serv);
+					System.out.println("Summary sheet can be opened from another user! ERROR");
+
+				} catch (Exception e) {
+					System.out.println("Summary sheet cannot be opened from another user! OK");
+					System.out.println("All good!");
+				}
 			} catch (Exception e) {
 				System.out.println("Error loading created summary sheet");
 				e.printStackTrace();

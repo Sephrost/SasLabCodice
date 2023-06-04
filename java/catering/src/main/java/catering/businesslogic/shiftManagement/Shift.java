@@ -18,6 +18,10 @@ public class Shift {
     private LocalTime startTime;
     private LocalTime endTime;
 
+	public int getId(){
+		return id;
+	}
+
     public void decreaseAvailableTime(User c, int t) {
         // implementation
     }
@@ -50,4 +54,19 @@ public class Shift {
         });
         return shifts;
     }
+
+	public static Shift loadShift(int id) {
+		String query = "SELECT * FROM Shifts WHERE id = " + id;
+		Shift shift = new Shift();
+		PersistenceManager.executeQuery(query, new ResultHandler() {
+			@Override
+			public void handle(ResultSet rs) throws SQLException {
+				shift.id = rs.getInt("id");
+				shift.date = rs.getDate("date");
+				shift.startTime = rs.getTime("starttime").toLocalTime();
+				shift.endTime = rs.getTime("endtime").toLocalTime();
+			}
+		});
+		return shift;
+	}
 }

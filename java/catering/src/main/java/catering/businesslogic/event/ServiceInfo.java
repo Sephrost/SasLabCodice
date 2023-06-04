@@ -82,8 +82,9 @@ public class ServiceInfo implements EventItemInfo {
 	public int getExpectedParticipants() {
 		return expected_participants;
 	}
-	public EventInfo getEventId() {
-		return EventInfo.loadEventInfoById(EventId); //TODO: controllare
+
+	public EventInfo getEventInfo() {
+		return EventInfo.loadEventInfoById(EventId);
 	}
 
 	// tostring method override
@@ -110,7 +111,7 @@ public class ServiceInfo implements EventItemInfo {
 				serv.startHour = rs.getTime("time_start");
 				serv.endHour = rs.getTime("time_end");
 				serv.expected_participants = rs.getInt("expected_participants");
-				
+				serv.EventId = event_id;
 				
 				int proposedMenuId = rs.getInt("proposed_menu_id");
 				int approvedMenuId = rs.getInt("approved_menu_id");
@@ -170,8 +171,8 @@ public class ServiceInfo implements EventItemInfo {
 	@Override
 	public int hashCode(){
 		final int prime = 31;
-		int result = 1;
-		return prime * result + id ;
+    	int result = 1;
+    	return prime * result + id;
 	}
 
 	@Override
