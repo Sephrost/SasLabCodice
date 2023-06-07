@@ -91,5 +91,15 @@ public class KitchenJob {
         return rec;
     }
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) 
+			return false;
+		if(!(obj instanceof KitchenJob))
+			return false;
+		KitchenJob kj = (KitchenJob) obj;
+		return this.id == kj.id;
+	}
+		
 
 }

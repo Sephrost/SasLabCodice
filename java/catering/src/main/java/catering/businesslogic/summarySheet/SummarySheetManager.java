@@ -1,6 +1,7 @@
 package catering.businesslogic.summarySheet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
@@ -43,12 +44,16 @@ public class SummarySheetManager {
 		return s;
 	}
 
+	public SummarySheet getCurrentSummarySheet() {
+		return this.currentSummarySheet;
+	}
+
 	public Task addKitchenJob(KitchenJob kj) throws UseCaseLogicException {
 		if (this.currentSummarySheet == null) {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}
 		Task t = this.currentSummarySheet.addKitchenJob(kj);
-		this.notifyKitchenJobAdded(kj);
+		this.notifyKitchenJobAdded(this.currentSummarySheet, t);
 		return t;
 	}
 
@@ -56,8 +61,8 @@ public class SummarySheetManager {
 		if (this.currentSummarySheet == null) {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}
-		this.currentSummarySheet.removeKitchenJob(kj);
-		this.notifyKitchenJobRemoved(kj);
+		List<Task> tl = this.currentSummarySheet.removeKitchenJob(kj);
+		this.notifyKitchenJobRemoved(this.currentSummarySheet, tl);
 	}
 
 	public void reorderTaskPosition(Task task, int position) throws UseCaseLogicException, SummarySheetException {
@@ -98,7 +103,7 @@ public class SummarySheetManager {
 				r = s;
 			}
 		}
-		notifySummarySheetSelected(r);
+		notifySummarySheetSelected(r); // TODO: this make no sense, remove it
 		return r;
 	}
 
@@ -128,7 +133,7 @@ public class SummarySheetManager {
 	}
 
 	public void setCurrentSummarySheet(SummarySheet s) {
-		// implementation
+		this.currentSummarySheet = s;
 	}
 
 	public boolean checkSummarySheetExist() {
@@ -156,15 +161,15 @@ public class SummarySheetManager {
 		}
 	}
 
-	public void notifyKitchenJobAdded(KitchenJob kj) {
+	public void notifyKitchenJobAdded(SummarySheet s, Task t) {
 		for (SummarySheetReceiver r : receivers) {
-			r.notifyKitchenJobAdded(kj);
+			r.notifyKitchenJobAdded(s,t);
 		}
 	}
 
-	public void notifyKitchenJobRemoved(KitchenJob kj) {
+	public void notifyKitchenJobRemoved(SummarySheet s, List<Task> tl) {
 		for (SummarySheetReceiver r : receivers) {
-			r.notifyKitchenJobRemoved(kj);
+			r.notifyKitchenJobRemoved(s,tl);
 		}
 	}
 

@@ -115,14 +115,20 @@ public class ServiceInfo implements EventItemInfo {
 				
 				int proposedMenuId = rs.getInt("proposed_menu_id");
 				int approvedMenuId = rs.getInt("approved_menu_id");
-				Menu.loadAllMenus().forEach(menu -> {
-					if (menu.getId() == proposedMenuId) {
-						serv.proposedMenu = menu;
-					}
-					if (menu.getId() == approvedMenuId) {
-						serv.approvedMenu = menu;
-					}
-				});
+				// Menu.loadAllMenus().forEach(menu -> {
+				// 	if (menu.getId() == proposedMenuId) {
+				// 		serv.proposedMenu = menu;
+				// 	}
+				// 	if (menu.getId() == approvedMenuId) {
+				// 		serv.approvedMenu = menu;
+				// 	}
+				// });
+				if (proposedMenuId != 0) {
+					serv.proposedMenu = Menu.loadMenu(proposedMenuId);
+				}
+				if (approvedMenuId != 0) {
+					serv.approvedMenu = Menu.loadMenu(approvedMenuId);
+				}
 				
 				result.add(serv);
 			}

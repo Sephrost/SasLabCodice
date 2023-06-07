@@ -1,7 +1,10 @@
 package catering.persistence;
 
+import java.util.List;
+
 import catering.businesslogic.kitchenJob.KitchenJob;
 import catering.businesslogic.summarySheet.SummarySheet;
+import catering.businesslogic.summarySheet.SummarySheetException;
 import catering.businesslogic.summarySheet.SummarySheetReceiver;
 import catering.businesslogic.summarySheet.Task;
 
@@ -18,13 +21,18 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 	}
 
 	@Override
-	public void notifyKitchenJobAdded(KitchenJob kj) {
-		// TODO Auto-generated method stub
+	public void notifyKitchenJobAdded(SummarySheet s, Task t) {
+		Task.saveTask(t);
+		SummarySheet.insertTaskIntoSummarySheet(s, t);
 	}
 
 	@Override
-	public void notifyKitchenJobRemoved(KitchenJob kj) {
-		// TODO Auto-generated method stub
+	public void notifyKitchenJobRemoved(SummarySheet s, List<Task> tl) {
+		for (Task t : tl) {
+			Task.removeTask(t.getKitchenJob());
+			SummarySheet.removeEntry(s, t);
+		}
+		
 	}
 
 	@Override

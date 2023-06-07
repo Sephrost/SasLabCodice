@@ -494,6 +494,45 @@ public class Menu {
         return FXCollections.observableArrayList(loadedMenus.values());
     }
 
+	public static Menu loadMenu(int menu_id){
+		String query = "SELECT * FROM Menus WHERE id = " + menu_id;
+		Menu menu = new Menu();
+		PersistenceManager.executeQuery(query, new ResultHandler() {
+			@Override
+			public void handle(ResultSet rs) throws SQLException {
+				menu.id = rs.getInt("id");
+				menu.title = rs.getString("title");
+				menu.published = rs.getBoolean("published");
+				menu.owner = User.loadUserById(rs.getInt("owner_id"));
+			
+				// load features
+				String featQ = "SELECT * FROM MenuFeatures WHERE menu_id = " + menu.id;
+				PersistenceManager.executeQuery(featQ, new ResultHandler() {
+					@Override
+					public void handle(ResultSet rs) throws SQLException {
+						menu.featuresMap.put(rs.getString("name"), rs.getBoolean("value"));
+					}
+				});
+			}
+		});
+
+		menu.sections = Section.loadSectionsFor(menu_id);
+		menu.freeItems = MenuItem.loadItemsFor(menu_id, 0);
+
+		// find if "in use"
+		String inuseQ = "SELECT * FROM Services WHERE approved_menu_id = " + menu.id +
+				" OR " +
+				"proposed_menu_id = "+ menu.id;
+		PersistenceManager.executeQuery(inuseQ, new ResultHandler() {
+			@Override
+			public void handle(ResultSet rs) throws SQLException {
+				// se c'è anche un solo risultato vuol dire che il menù è in uso
+				menu.inUse = true;
+			}
+		});
+		return menu;
+	}
+
     public static void saveSectionOrder(Menu m) {
         String upd = "UPDATE MenuSections SET position = ? WHERE id = ?";
         PersistenceManager.executeBatchUpdate(upd, m.sections.size(), new BatchUpdateHandler() {

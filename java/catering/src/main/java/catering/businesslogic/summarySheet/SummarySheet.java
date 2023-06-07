@@ -67,14 +67,17 @@ public class SummarySheet {
 		return task;
 	}
 
-	public KitchenJob removeKitchenJob(KitchenJob kj) {
+	public List<Task> removeKitchenJob(KitchenJob kj) {
+		// This is a little different from the DSD because
+		// to avoid a ConcurrentModificationException
+		List<Task> tasks = new ArrayList<Task>();
 		for(Task task : this.tasks) {
-			if(task.getKitchenJob() == kj) {
-				this.tasks.remove(task);
-				return kj;
+			if(task.getKitchenJob().equals(kj)) {
+				tasks.add(task);		
 			}
 		}
-		return kj;
+		this.tasks.removeAll(tasks);
+		return tasks;
 	}
 
 	public void removeTask(Task task) {
@@ -170,7 +173,27 @@ public class SummarySheet {
 				return;
 			}
 		});
-	
+	}
+
+	public static void removeEntry(SummarySheet s,Task t){
+		String query = "DELETE FROM SummarySheets WHERE task_id = " + t.getId();
+		PersistenceManager.executeUpdate(query);
+	}
+
+	public static void insertTaskIntoSummarySheet(SummarySheet s, Task t){
+		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?)";
+		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
+			@Override
+			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, s.getService().getId());
+				ps.setInt(2, t.getId());
+				ps.setInt(3, s.getChef().getId());
+			}
+			@Override
+			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
+				return;
+			}
+		});
 	}
 
 }

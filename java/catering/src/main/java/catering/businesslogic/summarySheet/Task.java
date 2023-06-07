@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import catering.businesslogic.kitchenJob.KitchenJob;
@@ -79,19 +80,25 @@ public class Task {
         return task;
     }
 
-	// protected static void loadLastId() {
-	// 	String query = "SELECT MAX(id) as id_max FROM Tasks";
-	// 	PersistenceManager.executeQuery(query, new ResultHandler() {
-	// 		@Override
-	// 		public void handle(ResultSet rs) throws SQLException {
-	// 			Task.lastId = rs.getInt("id_max");
-	// 		}
-	// 	});
-	// }
-
-	// private static int getNewId() {
-	// 	return ++Task.lastId;
-	// }
+	public static List<Task> loadAllTasks() {
+		String query = "SELECT * FROM Tasks";
+		List<Task> tasks = new ArrayList<Task>();
+		PersistenceManager.executeQuery(query, new ResultHandler() {
+			@Override
+			public void handle(ResultSet rs) throws SQLException {
+				Task task = new Task();
+				task.id = rs.getInt("id");
+				task.completed = rs.getBoolean("completed");
+				task.quantity = rs.getString("quantity");
+				task.kj = KitchenJob.loadKitchenJobById(rs.getInt("kitchenjob_id"));
+				task.cook = User.loadUserById(rs.getInt("cook_id"));
+				task.estimatedTime = Duration.ofMinutes(rs.getInt("estimated_time"));
+				task.shift = Shift.loadShift(rs.getInt("shift_id"));
+				tasks.add(task);
+			}
+		});
+		return tasks;
+	}
 
 	public static void saveAllTasks(List<Task> task) {
 		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
@@ -131,6 +138,14 @@ public class Task {
 		});
 	}
 
+	public static void saveTask(Task task) {
+		saveAllTasks(List.of(task));
+	}
+
+	public static void removeTask(KitchenJob kj2) {
+		String query = "DELETE FROM Tasks WHERE kitchenjob_id = " + kj2.getId();
+		PersistenceManager.executeUpdate(query);
+	}
 
     
     // https://stackoverflow.com/questions/2265503/why-do-i-need-to-override-the-equals-and-hashcode-methods-in-java
@@ -150,5 +165,7 @@ public class Task {
         Task task = (Task) obj;
         return task.id == this.id;
     }
+
+	
     
 }
