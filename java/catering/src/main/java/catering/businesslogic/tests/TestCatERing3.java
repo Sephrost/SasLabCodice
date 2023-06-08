@@ -46,7 +46,7 @@ public class TestCatERing3 {
 				System.out.println("Tasks not swapped correctly! ERROR");
 			}
 
-			
+
 		} catch (Exception e) {
 			System.out.println("Error in swapping tasks");
 			e.printStackTrace();

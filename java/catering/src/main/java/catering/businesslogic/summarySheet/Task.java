@@ -101,7 +101,7 @@ public class Task {
 	}
 
 	public static void saveAllTasks(List<Task> task) {
-		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id, position) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, task.size(), new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
@@ -129,7 +129,6 @@ public class Task {
 				}
 				
 				ps.setInt(6, task.get(i).kj.getId());
-				ps.setInt(7, i);
 			}
 
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
@@ -139,8 +138,8 @@ public class Task {
 		});
 	}
 
-	public static void saveTask(Task task, int pos) {
-		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id, position) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public static void saveTask(Task task) {
+		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
@@ -168,7 +167,6 @@ public class Task {
 				}
 				
 				ps.setInt(6, task.kj.getId());
-				ps.setInt(7, pos);
 			}
 
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {

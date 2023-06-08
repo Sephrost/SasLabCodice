@@ -22,8 +22,8 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 
 	@Override
 	public void notifyKitchenJobAdded(SummarySheet s, Task t) {
-		Task.saveTask(t,s.getTasks().size() - 1);
-		SummarySheet.insertTaskIntoSummarySheet(s, t);
+		Task.saveTask(t);
+		SummarySheet.insertTaskIntoSummarySheet(s, t, s.getTasks().size() - 1);
 	}
 
 	@Override

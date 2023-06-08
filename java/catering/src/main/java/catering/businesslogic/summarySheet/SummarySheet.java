@@ -122,7 +122,7 @@ public class SummarySheet {
 
 	// Static method for persistence
 	public static ObservableList<SummarySheet> getAllSummarySheets() {
-		String query = "SELECT SummarySheets.* FROM SummarySheets join Tasks on SummarySheets.task_id = Tasks.id order by Tasks.position asc";
+		String query = "SELECT * FROM SummarySheets ORDER BY position asc";
 		ObservableList<SummarySheet> summarySheets = FXCollections.observableArrayList();
 		HashMap<ServiceInfo, List<Task>> taskList = new HashMap<ServiceInfo, List<Task>>();
 		HashMap<ServiceInfo, User> chefList = new HashMap<ServiceInfo, User>();
@@ -183,14 +183,15 @@ public class SummarySheet {
 		PersistenceManager.executeUpdate(query);
 	}
 
-	public static void insertTaskIntoSummarySheet(SummarySheet s, Task t){
-		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?)";
+	public static void insertTaskIntoSummarySheet(SummarySheet s, Task t, int position){
+		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
 				ps.setInt(1, s.getService().getId());
 				ps.setInt(2, t.getId());
 				ps.setInt(3, s.getChef().getId());
+				ps.setInt(4, position);
 			}
 			@Override
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
@@ -200,7 +201,7 @@ public class SummarySheet {
 	}
 
 	public static void saveTaskOrder(SummarySheet s){
-		String query = "UPDATE Tasks SET position = ? WHERE id = ?";
+		String query = "UPDATE SummarySheets SET position = ? WHERE task_id = ?";
 		PersistenceManager.executeBatchUpdate(query, s.getTasks().size(), new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
