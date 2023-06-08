@@ -65,7 +65,7 @@ public class SummarySheetManager {
 		this.notifyKitchenJobRemoved(this.currentSummarySheet, tl);
 	}
 
-	public void reorderTaskPosition(Task task, int position) throws UseCaseLogicException, SummarySheetException {
+	public void reorderTask(Task task, int position) throws UseCaseLogicException, SummarySheetException {
 		if (this.currentSummarySheet == null) {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}
@@ -77,7 +77,7 @@ public class SummarySheetManager {
 		}
 
 		this.currentSummarySheet.swapTaskPositions(task, position);
-		notifyTaskOrderModified();
+		notifyTaskOrderModified(this.currentSummarySheet);
 	}
 
 	public ShiftBoard getCurrentBoard() {
@@ -173,8 +173,10 @@ public class SummarySheetManager {
 		}
 	}
 
-	public void notifyTaskOrderModified() {
-		// implementation
+	public void notifyTaskOrderModified(SummarySheet s) {
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyTaskOrderModified(s);
+		}
 	}
 
 	public void notifyTaskAssigned(Task task) {

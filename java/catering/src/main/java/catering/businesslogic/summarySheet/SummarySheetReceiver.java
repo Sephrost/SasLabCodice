@@ -11,6 +11,6 @@ public interface SummarySheetReceiver {
     void notifySummarySheetSelected(SummarySheet sheet);
     void notifyKitchenJobAdded(SummarySheet s, Task t);
     void notifyKitchenJobRemoved(SummarySheet s, List<Task> tl);
-    void notifyTaskOrderModified();
+    void notifyTaskOrderModified(SummarySheet s);
 
 }

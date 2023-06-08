@@ -97,8 +97,11 @@ public class SummarySheet {
 	}
 
 	public void swapTaskPositions(Task task, int position) {
+		Task t = this.tasks.get(position);
+		int index = this.tasks.indexOf(task);
 		this.tasks.remove(task);
-		this.tasks.add(position, task);
+		this.tasks.add(index, t);
+		this.tasks.add(position + 1, task);
 	}
 
 	public void assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
@@ -119,7 +122,7 @@ public class SummarySheet {
 
 	// Static method for persistence
 	public static ObservableList<SummarySheet> getAllSummarySheets() {
-		String query = "SELECT * FROM SummarySheets";
+		String query = "SELECT SummarySheets.* FROM SummarySheets join Tasks on SummarySheets.task_id = Tasks.id order by Tasks.position asc";
 		ObservableList<SummarySheet> summarySheets = FXCollections.observableArrayList();
 		HashMap<ServiceInfo, List<Task>> taskList = new HashMap<ServiceInfo, List<Task>>();
 		HashMap<ServiceInfo, User> chefList = new HashMap<ServiceInfo, User>();
@@ -196,4 +199,18 @@ public class SummarySheet {
 		});
 	}
 
+	public static void saveTaskOrder(SummarySheet s){
+		String query = "UPDATE Tasks SET position = ? WHERE id = ?";
+		PersistenceManager.executeBatchUpdate(query, s.getTasks().size(), new BatchUpdateHandler() {
+			@Override
+			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
+				ps.setInt(1, i);
+				ps.setInt(2, s.getTasks().get(i).getId());
+			}
+			@Override
+			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
+				return;
+			}
+		});
+	}
 }

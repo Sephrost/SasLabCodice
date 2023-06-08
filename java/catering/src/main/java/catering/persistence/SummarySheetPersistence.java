@@ -22,7 +22,7 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 
 	@Override
 	public void notifyKitchenJobAdded(SummarySheet s, Task t) {
-		Task.saveTask(t);
+		Task.saveTask(t,s.getTasks().size() - 1);
 		SummarySheet.insertTaskIntoSummarySheet(s, t);
 	}
 
@@ -36,8 +36,8 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 	}
 
 	@Override
-	public void notifyTaskOrderModified() {
-		// TODO Auto-generated method stub
+	public void notifyTaskOrderModified(SummarySheet s) {
+		SummarySheet.saveTaskOrder(s);
 	}
 
 

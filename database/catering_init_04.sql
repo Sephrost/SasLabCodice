@@ -352,16 +352,17 @@ CREATE TABLE `Tasks` (
   `kitchenjob_id` int(11) NOT NULL,
   `cook_id` int(11) , -- maybe we need to add a business rule there
   `estimated_time` double ,
-  `shift_id` int(11) 
+  `shift_id` int(11),
+  `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `Tasks`
 --
 
-INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimated_time`, `shift_id`) VALUES
-(1, 0, 'Tanta tanta', 1, 5, 30.6, 1),
-(2, 0, 'Abbastanza per un elefante', 2, 6, 35, 2);
+INSERT INTO `Tasks` (`id`, `completed`, `quantity`, `kitchenjob_id`, `cook_id`, `estimated_time`, `shift_id`, `position`) VALUES
+(1, 0, 'Tanta tanta', 1, 5, 30.6, 1, 1),
+(2, 0, 'Abbastanza per un elefante', 2, 6, 35, 2, 2);
 
 -- --------------------------------------------------------
 

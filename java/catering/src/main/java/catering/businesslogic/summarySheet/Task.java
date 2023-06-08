@@ -101,7 +101,7 @@ public class Task {
 	}
 
 	public static void saveAllTasks(List<Task> task) {
-		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id) VALUES (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id, position) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, task.size(), new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
@@ -129,6 +129,7 @@ public class Task {
 				}
 				
 				ps.setInt(6, task.get(i).kj.getId());
+				ps.setInt(7, i);
 			}
 
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
@@ -138,8 +139,43 @@ public class Task {
 		});
 	}
 
-	public static void saveTask(Task task) {
-		saveAllTasks(List.of(task));
+	public static void saveTask(Task task, int pos) {
+		String query = "INSERT INTO Tasks ( completed, quantity, estimated_time, cook_id, shift_id, kitchenjob_id, position) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
+			@Override
+			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
+				ps.setBoolean(1, task.completed);
+				if (task.quantity == null) {
+					ps.setNull(2, java.sql.Types.VARCHAR);
+				} else {
+					ps.setString(2, task.quantity);
+				}
+				ps.setString(2, task.quantity);
+				if (task.estimatedTime == null) {
+					ps.setNull(3, java.sql.Types.INTEGER);
+				} else {
+					ps.setLong(3, task.estimatedTime.toMinutes());
+				}
+				if (task.cook == null) {
+					ps.setNull(4, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(4, task.cook.getId());
+				}
+				if (task.shift == null) {
+					ps.setNull(5, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(5, task.shift.getId());
+				}
+				
+				ps.setInt(6, task.kj.getId());
+				ps.setInt(7, pos);
+			}
+
+			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
+				task.id = rs.getInt(1);
+				System.out.println("Generated id: " + task.id);
+			}
+		});
 	}
 
 	public static void removeTask(KitchenJob kj2) {
