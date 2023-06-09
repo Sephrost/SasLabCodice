@@ -104,8 +104,20 @@ public class SummarySheet {
 		this.tasks.add(position + 1, task);
 	}
 
-	public void assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
-
+	public Task assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
+		if (shift != null) {
+			task.setShift(shift);
+		}
+		if (cook != null) {
+			task.setCook(cook);
+		}
+		if (expectedTime != null) {
+			task.setExpectedTime(expectedTime);
+		}
+		if (quantity != null) {
+			task.setQuantity(quantity);
+		}
+		return task;
 	}
 
 	public void removeTaskAssignment(Task task) {

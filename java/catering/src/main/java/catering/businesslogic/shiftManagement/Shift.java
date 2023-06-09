@@ -22,6 +22,10 @@ public class Shift {
 		return id;
 	}
 
+    public Date getDate(){
+        return date;
+    }
+
     public void decreaseAvailableTime(User c, int t) {
         // implementation
     }

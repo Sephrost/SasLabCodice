@@ -40,6 +40,9 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 		SummarySheet.saveTaskOrder(s);
 	}
 
-
+	@Override
+	public void notifyTaskAssigned(Task t) {
+		Task.updateTask(t);	
+	}
 	
 }

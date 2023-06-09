@@ -1,7 +1,11 @@
 package catering.businesslogic.summarySheet;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
@@ -118,10 +122,28 @@ public class SummarySheetManager {
 		return false;
 	}
 
-	public void assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
-		// implementation
-	}
+	public Task assignTask(Task task, Optional<Shift> shift, Optional<User> cook, Optional<String> expectedTime, Optional<String> quantity) throws UseCaseLogicException {
+		if (this.currentSummarySheet == null) {
+			throw new UseCaseLogicException("No summary sheet in use");
+		}
+		if (shift.isPresent() && shift.get().getDate().before(Calendar.getInstance().getTime())) {
+			throw new UseCaseLogicException("Cannot assign past shift");
+		}
+		if (shift.isPresent() && shift.get().getDate().after(this.currentSummarySheet.getService().getDate())) {
+			throw new UseCaseLogicException("Date of shift is after the date of the service");
+		}
+		if (!this.currentSummarySheet.hasTask(task)) {
+			throw new UseCaseLogicException("Task is not in the summary sheet, please add it first");
+		}
+		if (cook.isPresent() && !cook.get().isCook()) {
+			throw new UseCaseLogicException("User is not a cook");
+		}
 
+		Task t = currentSummarySheet.assignTask(task, shift.orElse(null), cook.orElse(null), expectedTime.orElse(null), quantity.orElse(null));
+		notifyTaskAssigned(task);
+		return t;
+	}
+	
 	public void removeTaskAssignment(Task task) {
 		// implementation
 	}
@@ -139,8 +161,7 @@ public class SummarySheetManager {
 	}
 
 	public boolean checkSummarySheetExist() {
-		// implementation
-		return true;
+		return this.currentSummarySheet != null;
 	}
 
 	//
@@ -149,6 +170,10 @@ public class SummarySheetManager {
 
 	public void addReceiver(SummarySheetReceiver r) {
 		receivers.add(r);
+	}
+
+	public void removeReceiver(SummarySheetReceiver r) {
+		receivers.remove(r);
 	}
 
 	public void notifySummarySheetCreated(SummarySheet s) {
@@ -182,7 +207,9 @@ public class SummarySheetManager {
 	}
 
 	public void notifyTaskAssigned(Task task) {
-		// implementation
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyTaskAssigned(task);
+		}
 	}
 
 	public void notifyTaskRemoved(Task task) {

@@ -41,6 +41,27 @@ public class Task {
         return kj;
     }
 
+	// make all getters
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public Duration getEstimatedTime() {
+		return estimatedTime;
+	}
+
+	public User getCook() {
+		return cook;
+	}
+
+	public Shift getShift() {
+		return shift;
+	}
+
     public void setShift(Shift shift) {
         // implementation
     }
@@ -172,6 +193,44 @@ public class Task {
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
 				task.id = rs.getInt(1);
 				System.out.println("Generated id: " + task.id);
+			}
+		});
+	}
+
+	public static void updateTask(Task task){
+		String query = "UPDATE Tasks SET completed = ?, quantity = ?, estimated_time = ?, cook_id = ?, shift_id = ?, kitchenjob_id = ? WHERE id = ?";
+		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
+			@Override
+			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
+				ps.setBoolean(1, task.completed);
+				if (task.quantity == null) {
+					ps.setNull(2, java.sql.Types.VARCHAR);
+				} else {
+					ps.setString(2, task.quantity);
+				}
+				ps.setString(2, task.quantity);
+				if (task.estimatedTime == null) {
+					ps.setNull(3, java.sql.Types.INTEGER);
+				} else {
+					ps.setLong(3, task.estimatedTime.toMinutes());
+				}
+				if (task.cook == null) {
+					ps.setNull(4, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(4, task.cook.getId());
+				}
+				if (task.shift == null) {
+					ps.setNull(5, java.sql.Types.INTEGER);
+				} else {
+					ps.setInt(5, task.shift.getId());
+				}
+				
+				ps.setInt(6, task.kj.getId());
+				ps.setInt(7, task.id);
+			}
+			@Override
+			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
+				return;
 			}
 		});
 	}
