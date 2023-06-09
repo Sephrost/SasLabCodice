@@ -3,23 +3,36 @@ package catering.businesslogic.shiftManagement;
 import java.time.Duration;
 import java.util.ArrayList;
 
+import catering.businesslogic.UseCaseLogicException;
+import catering.businesslogic.user.User;
+
 public class ShiftManager {
     private ShiftBoard shiftBoard;
 
     public ShiftManager() {
-        this.shiftBoard = new ShiftBoard();
+        this.shiftBoard = ShiftBoard.getInstance();
     }
 
     public ShiftBoard getCurrentBoard() {
         return this.shiftBoard;
     }
 
-    public boolean isAssigned(User c, Shift s) {
-        // implementation
+    public boolean isAssigned(User c, Shift s) throws UseCaseLogicException {
+        if (shiftBoard == null) {
+			throw new UseCaseLogicException("ShiftBoard not initialized correctly");
+		}
+		if (c == null) {
+			throw new UseCaseLogicException("User cannot be null");
+		}
+		if (s == null) {
+			throw new UseCaseLogicException("Shift cannot be null");
+		}
+		
+		return false;
     }
 
     public ArrayList<Shift> getShifts() {
-        // implementation
+        return this.shiftBoard.getShifts();
     }
 
     public void removeShift(User c, Shift sh) {

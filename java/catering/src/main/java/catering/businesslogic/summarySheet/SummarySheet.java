@@ -122,7 +122,7 @@ public class SummarySheet {
 
 	// Static method for persistence
 	public static ObservableList<SummarySheet> getAllSummarySheets() {
-		String query = "SELECT * FROM SummarySheets ORDER BY position asc";
+		String query = "SELECT * FROM SummarySheets ORDER BY service_id,position asc";
 		ObservableList<SummarySheet> summarySheets = FXCollections.observableArrayList();
 		HashMap<ServiceInfo, List<Task>> taskList = new HashMap<ServiceInfo, List<Task>>();
 		HashMap<ServiceInfo, User> chefList = new HashMap<ServiceInfo, User>();

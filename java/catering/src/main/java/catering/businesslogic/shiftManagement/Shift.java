@@ -13,7 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Shift {
-    int id;
+    private int id;
     private Date date;
     private LocalTime startTime;
     private LocalTime endTime;

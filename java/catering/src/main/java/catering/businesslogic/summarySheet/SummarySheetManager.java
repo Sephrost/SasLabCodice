@@ -80,9 +80,11 @@ public class SummarySheetManager {
 		notifyTaskOrderModified(this.currentSummarySheet);
 	}
 
-	public ShiftBoard getCurrentBoard() {
-		return CatERing.getInstance().getShiftManager().getCurrentBoard();
-	}
+	// TODO: to avoid high coupling with shift management, we should 
+	// remove this
+	// public ShiftBoard getCurrentBoard() {
+	// 	return CatERing.getInstance().getShiftManager().getCurrentBoard();
+	// }
 
 	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser)
 			throws UseCaseLogicException, SummarySheetException {
