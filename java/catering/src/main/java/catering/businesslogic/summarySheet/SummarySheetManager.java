@@ -150,7 +150,8 @@ public class SummarySheetManager {
 	}
 
 	public void taskCompleted(Task task) {
-		// implementation
+		this.currentSummarySheet.taskCompleted(task);
+		notifyTaskCompleted(task);
 	}
 
 	public void getCurrentTaskStatuses() {
@@ -218,6 +219,8 @@ public class SummarySheetManager {
 	}
 
 	public void notifyTaskCompleted(Task task) {
-		// implementation
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyTaskCompleted(task);
+		}
 	}
 }

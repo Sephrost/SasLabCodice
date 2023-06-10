@@ -44,5 +44,10 @@ public class SummarySheetPersistence implements SummarySheetReceiver{
 	public void notifyTaskAssigned(Task t) {
 		Task.updateTask(t);	
 	}
+
+	@Override
+	public void notifyTaskCompleted(Task t) {
+		Task.updateTask(t);
+	}
 	
 }

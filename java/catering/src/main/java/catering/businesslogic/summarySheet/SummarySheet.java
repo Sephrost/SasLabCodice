@@ -126,7 +126,7 @@ public class SummarySheet {
 	}
 
 	public void taskCompleted(Task task) {
-		// implementation
+		task.setCompleted();
 	}
 
 	public void getCurrentTaskStatuses() {
