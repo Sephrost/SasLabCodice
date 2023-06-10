@@ -2,12 +2,16 @@ package catering.businesslogic.tests;
 
 import java.util.List;
 import java.util.Optional;
+import java.time.Duration;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
+import catering.businesslogic.summarySheet.SummarySheet;
+import catering.businesslogic.summarySheet.SummarySheetManager;
 import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;
+import catering.businesslogic.user.UserManager;
 import catering.persistence.PersistenceManager;
 
 public class TestCatERing5 {
@@ -37,13 +41,29 @@ public class TestCatERing5 {
             List<Task> tl = app.getSummarySheetManager().getCurrentSummarySheet().getTasks();
             Task t = tl.get(0);
             System.out.println("Trying to assign first shift to task...");
-            app.getSummarySheetManager().assignTask(t, Optional.of(app.getShiftManager().getShifts().get(0)), Optional.empty(), Optional.empty(), Optional.empty());
-            if (t.getShift()!=null) {
-                System.out.println("Shift assigned correctly!");
-            } else {
-                System.out.println("Shift not assigned correctly! ERROR");
+            app.getSummarySheetManager().assignTask(
+                t,
+                // Optional.of(app.getShiftManager().getShifts().get(0)), // Shift
+                Optional.ofNullable(null), // Shift
+                Optional.of(User.loadUserById(4)), // Cook Marinella FTW
+                Optional.of(Duration.ofHours(2)), // Duration
+                Optional.of("Yes") // Quantity
+            );
+            System.out.println("Assigned Parameters to task");
+            System.out.println("Checking if the assignment is persistent...");
+            app.getSummarySheetManager().chooseSummarySheet(ev, serv);
+            tl = app.getSummarySheetManager().getCurrentSummarySheet().getTasks();
+            t = tl.get(0);
+            if (
+                t.getShift() != null &&
+                t.getCook() != null &&
+                t.getEstimatedTime() != null &&
+                t.getQuantity() != null
+            ){
+                System.out.println("Assignment is persistent");
+            }else{
+                System.out.println("Assignment is not persistent, something is wrong");
             }
-
         }catch(Exception e){
             System.out.println("Error somewhere");
 			e.printStackTrace();

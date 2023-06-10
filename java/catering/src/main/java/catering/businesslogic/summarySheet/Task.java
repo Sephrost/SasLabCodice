@@ -63,19 +63,19 @@ public class Task {
 	}
 
     public void setShift(Shift shift) {
-        // implementation
+        this.shift = shift;
     }
 
     public void setCook(User cook) {
-        // implementation
+        this.cook = cook;
     }
 
-    public void setExpectedTime(String expectedTime) {
-        // implementation
+    public void setExpectedTime(Duration expectedTime) {
+        this.estimatedTime = expectedTime;
     }
 
     public void setQuantity(String quantity) {
-        // implementation
+        this.quantity = quantity;
     }
 
     public void setCompleted() {
@@ -212,7 +212,7 @@ public class Task {
 				if (task.estimatedTime == null) {
 					ps.setNull(3, java.sql.Types.INTEGER);
 				} else {
-					ps.setLong(3, task.estimatedTime.toMinutes());
+					ps.setDouble(3, (double)task.estimatedTime.toMinutes());
 				}
 				if (task.cook == null) {
 					ps.setNull(4, java.sql.Types.INTEGER);

@@ -1,5 +1,6 @@
 package catering.businesslogic.summarySheet;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class SummarySheetManager {
 		return false;
 	}
 
-	public Task assignTask(Task task, Optional<Shift> shift, Optional<User> cook, Optional<String> expectedTime, Optional<String> quantity) throws UseCaseLogicException {
+	public Task assignTask(Task task, Optional<Shift> shift, Optional<User> cook, Optional<Duration> expectedTime, Optional<String> quantity) throws UseCaseLogicException {
 		if (this.currentSummarySheet == null) {
 			throw new UseCaseLogicException("No summary sheet in use");
 		}

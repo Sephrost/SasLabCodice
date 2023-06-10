@@ -4,6 +4,7 @@ import java.security.Provider.Service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,7 +105,7 @@ public class SummarySheet {
 		this.tasks.add(position + 1, task);
 	}
 
-	public Task assignTask(Task task, Shift shift, User cook, String expectedTime, String quantity) {
+	public Task assignTask(Task task, Shift shift, User cook, Duration expectedTime, String quantity) {
 		if (shift != null) {
 			task.setShift(shift);
 		}
