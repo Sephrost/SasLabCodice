@@ -26,22 +26,6 @@ public class Shift {
         return date;
     }
 
-    public void decreaseAvailableTime(User c, int t) {
-        // implementation
-    }
-
-    public void increaseAvailableTime(User c, int t) {
-        // implementation
-    }
-
-    public boolean isAssigned(User c) {
-        // implementation
-    }
-
-    public boolean isAvailable(User c, Duration tm) {
-        // implementation
-    }
-
     public static ObservableList<Shift> getAllShifts() {
         ObservableList<Shift> shifts = FXCollections.observableArrayList();
         String query = "SELECT * FROM Shifts";

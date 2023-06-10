@@ -404,7 +404,7 @@ CREATE TABLE `Shiftboard` (
   `id` int(11) NOT NULL,
   `shift_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `state` enum('occupied','avaiable') NOT NULL
+  `state` enum('occupied','available') NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
@@ -414,8 +414,8 @@ CREATE TABLE `Shiftboard` (
 
 INSERT INTO `Shiftboard` (`id`, `shift_id`,`user_id`,`state`) VALUES
 (1, 1, 4, 'occupied'),
-(2, 1, 5, 'avaiable'),
-(3, 2, 4, 'avaiable'),
+(2, 1, 5, 'available'),
+(3, 2, 4, 'available'),
 (4, 2, 5, 'occupied');
 --
 -- Table structure for table `Users`

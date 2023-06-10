@@ -92,6 +92,20 @@ public class PersistenceManager {
         return lastId;
     }
 
+    public static int getQueryRowCount(String query)  {
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet standardRS = statement.executeQuery(query)) {
+            int size = 0;
+            while (standardRS.next()) {
+                size++;
+            }
+            return size;
+        }catch(SQLException ex){
+            return -1;
+        }
+    }
+
 	public static Boolean testDB(){
 		try(Connection conn = DriverManager.getConnection(url, username, password)){
 			return true;

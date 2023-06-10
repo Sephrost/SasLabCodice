@@ -139,6 +139,9 @@ public class SummarySheetManager {
 		if (cook.isPresent() && !cook.get().isCook()) {
 			throw new UseCaseLogicException("User is not a cook");
 		}
+		if (cook.isPresent() && shift.isPresent() && !ShiftBoard.getInstance().isAvailable(cook.get(), shift.get())) {
+			throw new UseCaseLogicException("User is not available for the shift or already assigned");
+		}
 
 		Task t = currentSummarySheet.assignTask(task, shift.orElse(null), cook.orElse(null), expectedTime.orElse(null), quantity.orElse(null));
 		notifyTaskAssigned(task);

@@ -1,9 +1,15 @@
 package catering.businesslogic.shiftManagement;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Map;
 
+import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;
+import catering.persistence.PersistenceManager;
+import catering.persistence.ResultHandler;
 
 
 public class ShiftBoard {
@@ -22,15 +28,28 @@ public class ShiftBoard {
         return instance;
     }
 
-    public boolean isAssigned(User c, Shift s) {
-        
-    }
-
-    public boolean isAvailable(User c, Shift sh, Duration tm) {
-        // implementation
+    public boolean isAvailable(User c, Shift sh) {
+        String query = "SELECT * FROM Shiftboard WHERE shift_id='"+sh.getId()+"' AND user_id='"+c.getId()+"'";
+        boolean res[] = {false};
+        PersistenceManager.executeQuery(query, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                if(PersistenceManager.getQueryRowCount(query) > 0)
+                    res[0] = rs.getString("state").equals("available");    
+            }
+        });
+        return res[0];
     }
 
 	public ArrayList<Shift> getShifts() {
 		return shifts;
 	}
+
+    public static void setUnavailable(Task t){
+        if (t.getShift() == null || t.getCook() == null)
+            return;
+        String query = "UPDATE Shiftboard SET state='occupied' WHERE shift_id='"+t.getShift().getId()+"' AND user_id='"+t.getCook().getId()+"'";
+        PersistenceManager.executeUpdate(query);
+    }
+
 }

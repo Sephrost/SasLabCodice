@@ -7,6 +7,7 @@ import java.time.Duration;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
+import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.summarySheet.SummarySheet;
 import catering.businesslogic.summarySheet.SummarySheetManager;
 import catering.businesslogic.summarySheet.Task;
@@ -43,7 +44,7 @@ public class TestCatERing5 {
             System.out.println("Trying to assign first shift to task...");
             app.getSummarySheetManager().assignTask(
                 t,
-                // Optional.of(app.getShiftManager().getShifts().get(0)), // Shift
+                // Optional.of(Shift.loadShift(1)), // Shift
                 Optional.ofNullable(null), // Shift
                 Optional.of(User.loadUserById(4)), // Cook Marinella FTW
                 Optional.of(Duration.ofHours(2)), // Duration

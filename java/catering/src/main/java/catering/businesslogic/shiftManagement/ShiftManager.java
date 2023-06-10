@@ -17,7 +17,7 @@ public class ShiftManager {
         return this.shiftBoard;
     }
 
-    public boolean isAssigned(User c, Shift s) throws UseCaseLogicException {
+    public boolean isAvailable(User c, Shift s) throws UseCaseLogicException {
         if (shiftBoard == null) {
 			throw new UseCaseLogicException("ShiftBoard not initialized correctly");
 		}
@@ -28,7 +28,7 @@ public class ShiftManager {
 			throw new UseCaseLogicException("Shift cannot be null");
 		}
 		
-		return false;
+		return this.shiftBoard.isAvailable(c, s);
     }
 
     public ArrayList<Shift> getShifts() {
@@ -39,7 +39,4 @@ public class ShiftManager {
         // implementation
     }
 
-    public boolean isAvailable(User c, Shift sh, Duration tm) {
-        // implementation
-    }
 }
