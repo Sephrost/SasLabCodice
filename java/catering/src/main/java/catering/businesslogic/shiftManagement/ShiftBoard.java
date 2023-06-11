@@ -52,4 +52,9 @@ public class ShiftBoard {
         PersistenceManager.executeUpdate(query);
     }
 
+    public static void setAvailable(User c, Shift sh){
+        String query = "UPDATE Shiftboard SET state='available' WHERE shift_id='"+sh.getId()+"' AND user_id='"+c.getId()+"'";
+        PersistenceManager.executeUpdate(query);
+    }
+
 }

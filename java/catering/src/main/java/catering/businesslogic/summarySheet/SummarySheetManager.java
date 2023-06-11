@@ -148,13 +148,27 @@ public class SummarySheetManager {
 		return t;
 	}
 	
-	public void removeTaskAssignment(Task task) {
-		// implementation
+	public Task removeTaskAssignment(Task task) throws UseCaseLogicException {
+		if (this.currentSummarySheet == null) {
+			throw new UseCaseLogicException("No summary sheet in use");
+		}
+		if (!this.currentSummarySheet.hasTask(task)) {
+			throw new UseCaseLogicException("Task is not in the summary sheet, please add it first");
+		}
+		if(task.isCompleted()){
+			throw new UseCaseLogicException("Task is already completed");
+		}
+		Shift s = task.getShift();
+		User u = task.getCook();
+		Task t = this.currentSummarySheet.removeTaskAssignment(task);
+		notifyTaskAssignmentRemoved(t,s,u);
+		return t;
 	}
 
-	public void taskCompleted(Task task) {
-		this.currentSummarySheet.taskCompleted(task);
-		notifyTaskCompleted(task);
+	public Task taskCompleted(Task task) {
+		Task t = this.currentSummarySheet.taskCompleted(task);
+		notifyTaskCompleted(t);
+		return t;
 	}
 
 	public void getCurrentTaskStatuses() {
@@ -217,8 +231,10 @@ public class SummarySheetManager {
 		}
 	}
 
-	public void notifyTaskRemoved(Task task) {
-		// implementation
+	public void notifyTaskAssignmentRemoved(Task task, Shift s, User u) {
+		for (SummarySheetReceiver r : receivers) {
+			r.notifyTaskAssignmentRemoved(task,s,u);
+		}
 	}
 
 	public void notifyTaskCompleted(Task task) {

@@ -1,10 +1,12 @@
 package catering.persistence;
 import java.util.List;
 
+import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.shiftManagement.ShiftBoard;
 import catering.businesslogic.summarySheet.SummarySheet;
 import catering.businesslogic.summarySheet.SummarySheetReceiver;
 import catering.businesslogic.summarySheet.Task;
+import catering.businesslogic.user.User;
 
 public class ShiftBoardPersistence implements SummarySheetReceiver {
 
@@ -29,10 +31,10 @@ public class ShiftBoardPersistence implements SummarySheetReceiver {
         ShiftBoard.setUnavailable(t);
     }
 
-    // @Override
-    // public void notifyTaskRemoved(Task t) {
-    //     // implementation goes here
-    // }
+    @Override
+    public void notifyTaskAssignmentRemoved(Task task, Shift s, User u){
+        ShiftBoard.setAvailable(u,s);
+    }
 
     @Override
     public void notifyTaskCompleted(Task t) {}

@@ -121,12 +121,17 @@ public class SummarySheet {
 		return task;
 	}
 
-	public void removeTaskAssignment(Task task) {
-		// implementation
+	public Task removeTaskAssignment(Task task) {
+		task.setShift(null);
+		task.setCook(null);
+		task.setExpectedTime(null);
+		task.setQuantity(null);
+		return task;
 	}
 
-	public void taskCompleted(Task task) {
+	public Task taskCompleted(Task task) {
 		task.setCompleted();
+		return task;
 	}
 
 	public void getCurrentTaskStatuses() {

@@ -240,6 +240,12 @@ public class Task {
 		PersistenceManager.executeUpdate(query);
 	}
 
+	public static void removeTaskAssignment(Task t) {
+		String query = "UPDATE Tasks SET quantity = null, estimated_time = null, cook_id = null, shift_id = null WHERE id = " + t.getId();
+		PersistenceManager.executeUpdate(query);
+	}
+
+
     
     // https://stackoverflow.com/questions/2265503/why-do-i-need-to-override-the-equals-and-hashcode-methods-in-java
 	@Override
