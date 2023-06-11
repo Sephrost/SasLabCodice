@@ -1,20 +1,16 @@
 package catering.businesslogic.summarySheet;
 
-import java.security.Provider.Service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import catering.businesslogic.event.ServiceInfo;
-import catering.businesslogic.event.ServiceInfo.State;
+
 import catering.businesslogic.kitchenJob.KitchenJob;
-import catering.businesslogic.menu.Menu;
 import catering.businesslogic.menu.MenuItem;
 import catering.businesslogic.shiftManagement.Shift;
 import catering.businesslogic.user.User;
@@ -22,9 +18,7 @@ import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 import catering.persistence.BatchUpdateHandler;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 
 
 public class SummarySheet {
@@ -32,7 +26,6 @@ public class SummarySheet {
 	private final ServiceInfo service;
 	private List<Task> tasks;
 	private User chef;
-	// TODO: controllare menù da aggiungere
 
 	public SummarySheet(ServiceInfo service) {
 		this.service = service;
@@ -53,14 +46,6 @@ public class SummarySheet {
 		return chef;
 	}
 
-
-	public void addAssignment(KitchenJob kj) {
-		// implementation
-	}
-
-	public void createTask(KitchenJob kj) {
-		// implementation
-	}
 
 	public Task addKitchenJob(KitchenJob kj) {
 		Task task = new Task(kj);
@@ -181,13 +166,14 @@ public class SummarySheet {
 		int serviceId = s.getService().getId();
 
 		// make batch insert into summarysheet
-		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?)";
+		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id, position) VALUES (?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, s.getTasks().size(), new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
 				ps.setInt(1, serviceId);
 				ps.setInt(2, s.getTasks().get(i).getId());
 				ps.setInt(3, s.getChef().getId());
+				ps.setInt(4, i + 1);
 			}
 			@Override
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {
@@ -202,14 +188,14 @@ public class SummarySheet {
 	}
 
 	public static void insertTaskIntoSummarySheet(SummarySheet s, Task t, int position){
-		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO SummarySheets (service_id, task_id, chef_id, position) VALUES (?, ?, ?, ?)";
 		PersistenceManager.executeBatchUpdate(query, 1, new BatchUpdateHandler() {
 			@Override
 			public void handleBatchItem(PreparedStatement ps, int i) throws SQLException {
 				ps.setInt(1, s.getService().getId());
 				ps.setInt(2, t.getId());
 				ps.setInt(3, s.getChef().getId());
-				ps.setInt(4, position);
+				ps.setInt(4, position + 1);
 			}
 			@Override
 			public void handleGeneratedIds(ResultSet rs, int i) throws SQLException {

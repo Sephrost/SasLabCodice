@@ -1,18 +1,15 @@
 package catering.businesslogic.tests;
 
-import java.security.Provider.Service;
 import java.util.List;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
-import catering.businesslogic.event.EventException;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.kitchenJob.KitchenJob;
 import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
-import javafx.event.Event;
 
 public class TestCatERing2_2a {
 	public static void main(String[] args) {

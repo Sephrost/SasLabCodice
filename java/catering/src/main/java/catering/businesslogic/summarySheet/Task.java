@@ -14,10 +14,8 @@ import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.ResultHandler;
-import javafx.collections.ObservableList;
 
 public class Task {
-		private static int lastId;
 
     private int id;
     private boolean completed;
@@ -82,7 +80,6 @@ public class Task {
         completed=true;
     }
 
-    // TODO: fix this
     public static Task loadTask(int task_id) {
         String query = "SELECT * FROM Tasks WHERE id = " + task_id;
         Task task = new Task();

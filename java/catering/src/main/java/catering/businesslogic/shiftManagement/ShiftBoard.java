@@ -2,9 +2,7 @@ package catering.businesslogic.shiftManagement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Map;
 
 import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;

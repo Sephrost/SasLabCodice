@@ -1,8 +1,6 @@
 package catering.businesslogic.summarySheet;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -85,12 +83,6 @@ public class SummarySheetManager {
 		notifyTaskOrderModified(this.currentSummarySheet);
 	}
 
-	// TODO: to avoid high coupling with shift management, we should 
-	// remove this
-	// public ShiftBoard getCurrentBoard() {
-	// 	return CatERing.getInstance().getShiftManager().getCurrentBoard();
-	// }
-
 	public SummarySheet chooseSummarySheet(EventInfo e, ServiceInfo ser)
 			throws UseCaseLogicException, SummarySheetException {
 		User user = CatERing.getInstance().getUserManager().getCurrentUser();
@@ -110,7 +102,6 @@ public class SummarySheetManager {
 				r = s;
 			}
 		}
-		notifySummarySheetSelected(r); // TODO: this make no sense, remove it
 		return r;
 	}
 
@@ -171,9 +162,6 @@ public class SummarySheetManager {
 		return t;
 	}
 
-	public void getCurrentTaskStatuses() {
-		// implementation
-	}
 
 	public void setCurrentSummarySheet(SummarySheet s) {
 		this.currentSummarySheet = s;
@@ -198,12 +186,6 @@ public class SummarySheetManager {
 	public void notifySummarySheetCreated(SummarySheet s) {
 		for (SummarySheetReceiver r : receivers) {
 			r.notifySummarySheetCreated(s);
-		}
-	}
-
-	public void notifySummarySheetSelected(SummarySheet s) {
-		for (SummarySheetReceiver r : receivers) {
-			r.notifySummarySheetSelected(s);
 		}
 	}
 

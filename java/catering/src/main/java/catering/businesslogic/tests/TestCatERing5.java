@@ -7,12 +7,8 @@ import java.time.Duration;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
-import catering.businesslogic.shiftManagement.Shift;
-import catering.businesslogic.summarySheet.SummarySheet;
-import catering.businesslogic.summarySheet.SummarySheetManager;
 import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;
-import catering.businesslogic.user.UserManager;
 import catering.persistence.PersistenceManager;
 
 public class TestCatERing5 {

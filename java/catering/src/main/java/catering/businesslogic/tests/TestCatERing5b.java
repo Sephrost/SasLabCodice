@@ -5,7 +5,6 @@ import java.util.List;
 import catering.businesslogic.CatERing;
 import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
-import catering.businesslogic.summarySheet.SummarySheet;
 import catering.businesslogic.summarySheet.Task;
 import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;

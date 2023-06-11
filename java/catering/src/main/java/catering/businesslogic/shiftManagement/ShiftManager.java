@@ -1,6 +1,5 @@
 package catering.businesslogic.shiftManagement;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 import catering.businesslogic.UseCaseLogicException;

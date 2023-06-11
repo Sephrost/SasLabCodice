@@ -15,9 +15,6 @@ public class ShiftBoardPersistence implements SummarySheetReceiver {
     public void notifySummarySheetCreated(SummarySheet sheet) {}
 
     @Override
-    public void notifySummarySheetSelected(SummarySheet sheet) {}
-
-    @Override
     public void notifyKitchenJobAdded(SummarySheet s, Task t) {}
 
     @Override

@@ -3,14 +3,12 @@ package catering.businesslogic.event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import catering.businesslogic.menu.Menu;
-import catering.businesslogic.summarySheet.SummarySheet;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.time.LocalTime;
 
 public class ServiceInfo implements EventItemInfo {
 

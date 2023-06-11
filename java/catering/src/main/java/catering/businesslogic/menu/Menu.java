@@ -347,8 +347,7 @@ public class Menu {
     public static void saveMenuFeatures(Menu m) {
         // Delete existing features if any
         String updDel = "DELETE FROM MenuFeatures WHERE menu_id = " + m.getId();
-        int ret = PersistenceManager.executeUpdate(updDel);
-
+        PersistenceManager.executeUpdate(updDel);
         featuresToDB(m);
     }
 

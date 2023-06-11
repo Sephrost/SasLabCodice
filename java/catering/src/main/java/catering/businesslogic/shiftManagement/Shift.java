@@ -2,11 +2,9 @@ package catering.businesslogic.shiftManagement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Date;
 
-import catering.businesslogic.user.User;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 import javafx.collections.FXCollections;
