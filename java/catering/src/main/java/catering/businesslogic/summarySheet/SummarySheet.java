@@ -66,10 +66,6 @@ public class SummarySheet {
 		return tasks;
 	}
 
-	public void removeTask(Task task) {
-		// implementation
-	}
-
 	public boolean hasTask(Task task) {
 		for(Task t : this.tasks) {
 			if(t.equals(task)) {
@@ -117,10 +113,6 @@ public class SummarySheet {
 	public Task taskCompleted(Task task) {
 		task.setCompleted();
 		return task;
-	}
-
-	public void getCurrentTaskStatuses() {
-		// implementation
 	}
 
 	// Static method for persistence
